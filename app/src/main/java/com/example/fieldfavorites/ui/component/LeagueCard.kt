@@ -1,7 +1,6 @@
 package com.example.fieldfavorites.ui.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,7 +30,7 @@ import com.example.fieldfavorites.ui.theme.FieldFavoritesTheme
 fun LeagueCard(modifier: Modifier = Modifier) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row(
             modifier = Modifier
