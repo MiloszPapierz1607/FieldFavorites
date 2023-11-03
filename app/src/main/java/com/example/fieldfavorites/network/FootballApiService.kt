@@ -1,7 +1,6 @@
 package com.example.fieldfavorites.network
 
 import com.example.fieldfavorites.BuildConfig
-import com.example.fieldfavorites.model.ApiResponse
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,15 +24,3 @@ private val retrofit = Retrofit.Builder()
              .build())
     }.build())
     .build()
-
-interface FootballApiService {
-    @GET("leagues")
-    suspend fun getLeagues(): ApiResponse
-}
-
-
-object FootballApi {
-    val retrofitService : FootballApiService by lazy {
-        retrofit.create(FootballApiService::class.java)
-    }
-}
