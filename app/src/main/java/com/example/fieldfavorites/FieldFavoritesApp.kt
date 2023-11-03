@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +36,7 @@ fun FieldFavoritesApp() {
 fun FieldFavoritesTopAppBar(modifier: Modifier = Modifier) {
     TopAppBar(
         title = {
-        Text("Choose a league")
+        Text(stringResource(R.string.leagues_screen_title))
     }
     )
 }
