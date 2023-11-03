@@ -19,16 +19,13 @@ fun LeaguesScreen(modifier: Modifier = Modifier,leagueViewModel: LeagueViewModel
     val leagueUiState by leagueViewModel.uiState.collectAsState()
 
     Column {
-        val lazyListState = rememberLazyListState()
-        LazyColumn(state = lazyListState) {
-            items(leagueUiState.leagues) {
-                LeagueCard(
-                    leagueName = it.name,
-                    flagSvgUrl = it.countryFlagSvg,
-                    logoUrl = it.logoImageUrl,
-                    modifier = modifier.padding(12.dp,24.dp)
-                )
-            }
+        leagueUiState.leagues.forEach {
+            LeagueCard(
+                leagueName = it.name,
+                flagSvgUrl = it.countryFlagSvg,
+                logoUrl = it.logoImageUrl,
+                modifier = modifier.padding(12.dp,24.dp)
+            )
         }
     }
 }
