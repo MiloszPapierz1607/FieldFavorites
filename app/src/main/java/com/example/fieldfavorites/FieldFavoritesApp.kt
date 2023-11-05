@@ -10,25 +10,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FieldFavoritesApp() {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            FieldFavoritesTopAppBar()
-        }
-    ) {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            LeaguesScreen()
-        }
-    }
+fun FieldFavoritesApp(navController: NavHostController = rememberNavController()) {
+    FieldFavoritesNavHost(navController = navController)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

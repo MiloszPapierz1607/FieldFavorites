@@ -22,7 +22,12 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 
 @Composable
-fun LeagueCard(leagueName: String,logoUrl: String,flagSvgUrl: String,modifier: Modifier = Modifier) {
+fun LeagueCard(
+    leagueName: String,
+    logoUrl: String,
+    flagSvgUrl: String,
+    modifier: Modifier = Modifier
+) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = modifier,
