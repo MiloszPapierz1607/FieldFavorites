@@ -1,8 +1,6 @@
 package com.example.fieldfavorites.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,19 +13,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.fieldfavorites.R
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import com.example.fieldfavorites.ui.theme.FieldFavoritesTheme
 
 @Composable
-fun LeagueCard(modifier: Modifier = Modifier) {
+fun LeagueCard(leagueName: String,logoUrl: String,flagSvgUrl: String,modifier: Modifier = Modifier) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = modifier,
@@ -43,13 +38,17 @@ fun LeagueCard(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(52.dp)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.premier),
-                    contentDescription = "fdas"
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(logoUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = "$leagueName logo image",
+                    contentScale = ContentScale.Crop,
                 )
             }
             Text(
-                text = "Premier League",
+                text = leagueName,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
@@ -64,30 +63,13 @@ fun LeagueCard(modifier: Modifier = Modifier) {
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://media-4.api-sports.io/flags/gb.svg")
+                        .data(flagSvgUrl)
                         .decoderFactory(SvgDecoder.Factory())
                         .crossfade(true)
                         .build(),
                     contentDescription ="Logo",
                 )
             }
-        }
-    }
-}
-
-
-@Preview()
-@Composable
-private fun LeagueCardPreview() {
-    FieldFavoritesTheme {
-        Column{
-            LeagueCard(
-                modifier = Modifier
-                    .padding(horizontal = 4.dp, vertical = 16.dp)
-            )
-            LeagueCard(modifier = Modifier
-                .padding(horizontal = 4.dp, vertical = 16.dp)
-            )
         }
     }
 }
