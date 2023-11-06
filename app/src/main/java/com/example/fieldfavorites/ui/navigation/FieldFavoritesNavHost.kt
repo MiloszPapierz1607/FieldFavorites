@@ -37,7 +37,11 @@ fun FieldFavoritesNavHost(
                 type = NavType.IntType
             })
         ) {
-            TeamsScreen()
+            TeamsScreen(
+                navigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FieldFavorites</string>
     <string name="leagues_screen_title">Choose a league</string>
+    <string name="teams_screen_title">Add club to favorite</string>
 </resources>
