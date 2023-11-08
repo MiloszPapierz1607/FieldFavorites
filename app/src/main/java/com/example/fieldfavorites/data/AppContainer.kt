@@ -2,6 +2,8 @@ package com.example.fieldfavorites.data
 
 import android.content.Context
 import com.example.fieldfavorites.BuildConfig
+import com.example.fieldfavorites.data.favorites.FavoriteRepository
+import com.example.fieldfavorites.data.favorites.OfflineFavoriteRepository
 import com.example.fieldfavorites.data.leagues.LeagueRepository
 import com.example.fieldfavorites.data.leagues.NoApiLeagueRepository
 import com.example.fieldfavorites.data.teams.ApiTeamRepository
@@ -16,6 +18,7 @@ import retrofit2.Retrofit
 interface AppContainer {
     val leagueRepository: LeagueRepository
     val teamRepository: TeamRepository
+    val favoriteRepository: FavoriteRepository
 }
 
 /**
@@ -60,5 +63,12 @@ class AppDataContainer(private val context: Context) : AppContainer {
      */
     override val teamRepository: TeamRepository by lazy {
         ApiTeamRepository(retrofitService)
+    }
+
+    /**
+     * Implementation for [FavoriteRepository]
+     */
+    override val favoriteRepository: FavoriteRepository by lazy {
+        OfflineFavoriteRepository(FavoriteDatabase.getDatabase(context).favoriteDao())
     }
 }

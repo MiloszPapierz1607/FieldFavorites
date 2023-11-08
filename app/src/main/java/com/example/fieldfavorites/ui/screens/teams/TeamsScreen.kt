@@ -40,6 +40,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
+import com.example.fieldfavorites.model.Team
 import com.example.fieldfavorites.ui.AppViewModelProvider
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
 
@@ -51,7 +52,7 @@ object TeamsDestination : NavigationDestination {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TeamsScreen(modifier: Modifier = Modifier,navigateBack: () -> Unit,teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun TeamsScreen(navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val teamUiState by teamViewModel.uiState.collectAsState()
     val teams = teamUiState.teams
 
@@ -69,8 +70,10 @@ fun TeamsScreen(modifier: Modifier = Modifier,navigateBack: () -> Unit,teamViewM
             ) {
                 items(teams) {
                     TeamCard(
-                        teamName = it.name,
-                        teamLogoImg = it.logo,
+                        addToFavorite = {
+                            teamViewModel.insertFavoriteTeam(it)
+                        },
+                        team = it,
                         modifier = modifier
                             .padding(12.dp, 24.dp)
                     )
@@ -81,8 +84,8 @@ fun TeamsScreen(modifier: Modifier = Modifier,navigateBack: () -> Unit,teamViewM
 
 @Composable
 fun TeamCard(
-    teamName: String,
-    teamLogoImg: String,
+    addToFavorite:() -> Unit,
+    team:Team,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -102,15 +105,15 @@ fun TeamCard(
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(teamLogoImg)
+                        .data(team.logo)
                         .crossfade(true)
                         .build(),
-                    contentDescription = "$teamName logo image",
+                    contentDescription = "${team.name} logo image",
                     contentScale = ContentScale.Crop,
                 )
             }
             Text(
-                text = teamName,
+                text = team.name,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 16.dp),
@@ -125,11 +128,12 @@ fun TeamCard(
                     .border(
                         border = BorderStroke(1.dp, SolidColor(MaterialTheme.colorScheme.outline)),
                         shape = CircleShape
-                    ),
+                    )
+                   ,
                 contentAlignment = Alignment.Center,
 
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {addToFavorite()}) {
                     Icon(
                         imageVector = Icons.TwoTone.Star,
                         contentDescription = null,
