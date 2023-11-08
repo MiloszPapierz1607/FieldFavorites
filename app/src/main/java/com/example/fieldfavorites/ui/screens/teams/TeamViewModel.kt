@@ -31,7 +31,10 @@ class TeamViewModel(
     fun getTeams() {
         viewModelScope.launch {
             val teams = teamsRepository.getAllTeamsFromLeague(itemId)
-            println(teams.size)
+                .sortedBy {
+                    it.name
+                }
+
             _uiState.update { currentState ->
                 currentState.copy(
                     teams = teams
