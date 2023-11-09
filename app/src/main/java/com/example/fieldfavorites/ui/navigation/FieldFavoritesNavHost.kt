@@ -27,37 +27,39 @@ fun FieldFavoritesNavHost(
 ) {
     val favoriteUiState by favoriteViewModel.uiState.collectAsState()
 
-    NavHost(
-        navController = navController,
-        startDestination = if (favoriteUiState.favoriteTeams.isEmpty()) LeaguesDestination.route else FavoritesDestination.route,
-        modifier = modifier
-    ) {
-
-        composable(route = LeaguesDestination.route) {
-            LeaguesScreen(
-                navigateToTeams = {
-                    navController.navigate("${TeamsDestination.route}/${it}")
-                }
-            )
-        }
-
-        composable(
-            route = TeamsDestination.routeWithArgs,
-            arguments = listOf(navArgument(TeamsDestination.itemIdArg) {
-                type = NavType.IntType
-            })
+    if(!favoriteUiState.isLoading) {
+        NavHost(
+            navController = navController,
+            startDestination = if (favoriteUiState.favoriteTeams.isEmpty()) LeaguesDestination.route else FavoritesDestination.route,
+            modifier = modifier
         ) {
-            TeamsScreen(
-                navigateBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
 
-        composable(
-            route = FavoritesDestination.route
-        ) {
-            FavoritesScreen()
+            composable(route = LeaguesDestination.route) {
+                LeaguesScreen(
+                    navigateToTeams = {
+                        navController.navigate("${TeamsDestination.route}/${it}")
+                    }
+                )
+            }
+
+            composable(
+                route = TeamsDestination.routeWithArgs,
+                arguments = listOf(navArgument(TeamsDestination.itemIdArg) {
+                    type = NavType.IntType
+                })
+            ) {
+                TeamsScreen(
+                    navigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable(
+                route = FavoritesDestination.route
+            ) {
+                FavoritesScreen(favoriteViewModel = favoriteViewModel)
+            }
         }
     }
 }

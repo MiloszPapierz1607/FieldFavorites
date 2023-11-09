@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class FavoriteTeamsUiState(
-    val favoriteTeams: List<Team> = listOf()
+    val favoriteTeams: List<Team> = listOf(),
+    val isLoading: Boolean = true
 )
 
 class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :ViewModel() {
@@ -20,10 +21,10 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
         fetchFavoriteTeams()
     }
 
-    private fun fetchFavoriteTeams() {
+     private fun fetchFavoriteTeams() {
         viewModelScope.launch {
             favoriteRepository.getAllFavoriteTeamsStream().collect {
-                _uiState.value = FavoriteTeamsUiState(favoriteTeams = it)
+                _uiState.value = FavoriteTeamsUiState(favoriteTeams = it,isLoading = false)
             }
         }
     }
