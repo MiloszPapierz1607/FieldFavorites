@@ -3,8 +3,8 @@ package com.example.fieldfavorites.ui.screens.teams
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fieldfavorites.data.favorites.FavoriteRepository
 import com.example.fieldfavorites.data.teams.TeamRepository
-import com.example.fieldfavorites.model.League
 import com.example.fieldfavorites.model.Team
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,8 @@ data class TeamUiState(
 
 class TeamViewModel(
     savedStateHandle: SavedStateHandle,
-    private val teamsRepository: TeamRepository
+    private val teamsRepository: TeamRepository,
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
     private val itemId: Int = checkNotNull(savedStateHandle[TeamsDestination.itemIdArg])
     private val _uiState = MutableStateFlow(TeamUiState())
@@ -40,6 +41,12 @@ class TeamViewModel(
                     teams = teams
                 )
             }
+        }
+    }
+
+    fun insertFavoriteTeam(team: Team) {
+        viewModelScope.launch {
+            favoriteRepository.insertFavoriteTeam(team)
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.fieldfavorites.FieldFavoritesApplication
+import com.example.fieldfavorites.ui.screens.favorites.FavoriteViewModel
 import com.example.fieldfavorites.ui.screens.leagues.LeagueViewModel
 import com.example.fieldfavorites.ui.screens.teams.TeamViewModel
 
@@ -16,7 +17,11 @@ object AppViewModelProvider {
         }
 
         initializer {
-            TeamViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamRepository)
+            TeamViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamRepository,fieldFavoritesApplication().container.favoriteRepository)
+        }
+
+        initializer {
+            FavoriteViewModel(fieldFavoritesApplication().container.favoriteRepository)
         }
     }
 }
