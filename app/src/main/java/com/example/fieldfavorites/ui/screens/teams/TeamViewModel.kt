@@ -1,5 +1,8 @@
 package com.example.fieldfavorites.ui.screens.teams
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,10 +14,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 data class TeamUiState(
     val teams: List<Team> = listOf()
 )
+
+sealed interface TeamApiState {
+    data class Success(val teams: List<Team>) : TeamApiState
+    object Loading : TeamApiState
+    object Error : TeamApiState
+}
 
 class TeamViewModel(
     savedStateHandle: SavedStateHandle,
@@ -25,21 +35,31 @@ class TeamViewModel(
     private val _uiState = MutableStateFlow(TeamUiState())
     val uiState: StateFlow<TeamUiState> = _uiState.asStateFlow()
 
+    var teamApiState: TeamApiState by mutableStateOf(TeamApiState.Loading)
+        private set
+
     init {
         getTeams()
     }
 
-    fun getTeams() {
+    private fun getTeams() {
         viewModelScope.launch {
-            val teams = teamsRepository.getAllTeamsFromLeague(itemId)
-                .sortedBy {
-                    it.name
+            try {
+                val teams = teamsRepository.getAllTeamsFromLeague(itemId)
+                    .sortedBy {
+                        it.name
+                    }
+
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        teams = teams
+                    )
                 }
 
-            _uiState.update { currentState ->
-                currentState.copy(
-                    teams = teams
-                )
+                teamApiState = TeamApiState.Success(teams)
+            }
+            catch (e: IOException) {
+                teamApiState = TeamApiState.Error
             }
         }
     }
