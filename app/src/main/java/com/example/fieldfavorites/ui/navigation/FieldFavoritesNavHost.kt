@@ -36,8 +36,12 @@ fun FieldFavoritesNavHost(
 
             composable(route = LeaguesDestination.route) {
                 LeaguesScreen(
+                    canNavigateBack = favoriteUiState.favoriteTeams.isNotEmpty(),
                     navigateToTeams = {
                         navController.navigate("${TeamsDestination.route}/${it}")
+                    },
+                    navigateToFavorites = {
+                        navController.navigate(FavoritesDestination.route)
                     }
                 )
             }
@@ -49,6 +53,7 @@ fun FieldFavoritesNavHost(
                 })
             ) {
                 TeamsScreen(
+                    favoriteTeamsIds = favoriteUiState.favoriteTeams.map { it.id },
                     navigateBack = {
                         navController.popBackStack()
                     }
@@ -58,7 +63,12 @@ fun FieldFavoritesNavHost(
             composable(
                 route = FavoritesDestination.route
             ) {
-                FavoritesScreen(favoriteViewModel = favoriteViewModel)
+                FavoritesScreen(
+                navigateToLeagueScreen = {
+                    navController.navigate(LeaguesDestination.route)
+                },
+                favoriteViewModel = favoriteViewModel
+                )
             }
         }
     }

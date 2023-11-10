@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +43,7 @@ object FavoritesDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
+    navigateToLeagueScreen: () -> Unit,
     modifier: Modifier = Modifier,
     favoriteViewModel: FavoriteViewModel = viewModel(factory = AppViewModelProvider.Factory)
     ) {
@@ -49,8 +52,16 @@ fun FavoritesScreen(
         topBar = {
             FieldFavoritesTopAppBar(
                 title = "Your favorite clubs",
-                canNavigateBack = false
+                canNavigateBack = false,
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { navigateToLeagueScreen() }) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add"
+                )
+            }
         }
     ) {
         LazyColumn(modifier = modifier.padding(it)) {

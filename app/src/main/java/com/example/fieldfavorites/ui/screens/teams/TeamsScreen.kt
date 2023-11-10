@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.twotone.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -52,7 +53,7 @@ object TeamsDestination : NavigationDestination {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TeamsScreen(navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun TeamsScreen(favoriteTeamsIds: List<Int>,navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
     val teamUiState by teamViewModel.uiState.collectAsState()
     val teams = teamUiState.teams
 
@@ -74,6 +75,7 @@ fun TeamsScreen(navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewM
                             teamViewModel.insertFavoriteTeam(it)
                         },
                         team = it,
+                        isAdded = favoriteTeamsIds.contains(it.id),
                         modifier = modifier
                             .padding(12.dp, 24.dp)
                     )
@@ -84,6 +86,7 @@ fun TeamsScreen(navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewM
 
 @Composable
 fun TeamCard(
+    isAdded: Boolean = false,
     addToFavorite:() -> Unit,
     team:Team,
     modifier: Modifier = Modifier
@@ -133,9 +136,13 @@ fun TeamCard(
                 contentAlignment = Alignment.Center,
 
             ) {
-                IconButton(onClick = {addToFavorite()}) {
+                IconButton(onClick = {
+                    if(!isAdded) {
+                        addToFavorite()
+                    }
+                }) {
                     Icon(
-                        imageVector = Icons.TwoTone.Star,
+                        imageVector = if(isAdded) Icons.Filled.Star else Icons.TwoTone.Star,
                         contentDescription = null,
                     )
                 }
