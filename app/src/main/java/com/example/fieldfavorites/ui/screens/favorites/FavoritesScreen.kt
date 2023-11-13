@@ -46,7 +46,7 @@ object FavoritesDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
-    navigateToOverviewScreen: () -> Unit,
+    navigateToOverviewScreen: (Int,String) -> Unit,
     navigateToLeagueScreen: () -> Unit,
     modifier: Modifier = Modifier,
     favoriteViewModel: FavoriteViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -75,7 +75,7 @@ fun FavoritesScreen(
                     modifier = modifier
                         .padding(12.dp,24.dp)
                         .clickable {
-                            navigateToOverviewScreen()
+                            navigateToOverviewScreen(it.id,it.name)
                         }
                 )
             }

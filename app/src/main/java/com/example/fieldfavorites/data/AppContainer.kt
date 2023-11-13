@@ -6,6 +6,8 @@ import com.example.fieldfavorites.data.favorites.FavoriteRepository
 import com.example.fieldfavorites.data.favorites.OfflineFavoriteRepository
 import com.example.fieldfavorites.data.leagues.LeagueRepository
 import com.example.fieldfavorites.data.leagues.NoApiLeagueRepository
+import com.example.fieldfavorites.data.teamoverview.ApiTeamOverviewRepository
+import com.example.fieldfavorites.data.teamoverview.TeamOverviewRepository
 import com.example.fieldfavorites.data.teams.ApiTeamRepository
 import com.example.fieldfavorites.data.teams.TeamRepository
 import com.example.fieldfavorites.network.FootballApiService
@@ -19,6 +21,7 @@ interface AppContainer {
     val leagueRepository: LeagueRepository
     val teamRepository: TeamRepository
     val favoriteRepository: FavoriteRepository
+    val teamOverviewRepository: TeamOverviewRepository
 }
 
 /**
@@ -70,5 +73,12 @@ class AppDataContainer(private val context: Context) : AppContainer {
      */
     override val favoriteRepository: FavoriteRepository by lazy {
         OfflineFavoriteRepository(FavoriteDatabase.getDatabase(context).favoriteDao())
+    }
+
+    /**
+     * Implementation for [TeamOverviewRepository]
+     */
+    override val teamOverviewRepository: ApiTeamOverviewRepository by lazy {
+        ApiTeamOverviewRepository(retrofitService)
     }
 }

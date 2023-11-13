@@ -66,8 +66,8 @@ fun FieldFavoritesNavHost(
                 route = FavoritesDestination.route
             ) {
                 FavoritesScreen(
-                    navigateToOverviewScreen = {
-                       navController.navigate(TeamOverviewDestination.route)
+                    navigateToOverviewScreen = { teamId,teamName ->
+                       navController.navigate("${TeamOverviewDestination.route}/$teamId/$teamName")
                     },
                 navigateToLeagueScreen = {
                     navController.navigate(LeaguesDestination.route)
@@ -77,10 +77,11 @@ fun FieldFavoritesNavHost(
             }
 
             composable(
-                route = TeamOverviewDestination.route,
-                arguments = listOf(navArgument(TeamOverviewDestination.itemIdArg) {
-                    type = NavType.IntType
-                })
+                route = TeamOverviewDestination.routeWithArgs,
+                arguments = listOf(
+                    navArgument(TeamOverviewDestination.itemIdArg) { type = NavType.IntType },
+                    navArgument(TeamOverviewDestination.itemNameArg) {type = NavType.StringType}
+                )
             ) {
                 TeamOverviewScreen()
             }
