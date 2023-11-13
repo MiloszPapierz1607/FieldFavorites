@@ -1,5 +1,6 @@
 package com.example.fieldfavorites.ui.screens.favorites
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,12 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
+import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.Team
 import com.example.fieldfavorites.ui.AppViewModelProvider
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
@@ -43,6 +46,7 @@ object FavoritesDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
+    navigateToOverviewScreen: () -> Unit,
     navigateToLeagueScreen: () -> Unit,
     modifier: Modifier = Modifier,
     favoriteViewModel: FavoriteViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -51,7 +55,7 @@ fun FavoritesScreen(
     Scaffold(
         topBar = {
             FieldFavoritesTopAppBar(
-                title = "Your favorite clubs",
+                title = stringResource(R.string.favorites_screen_title),
                 canNavigateBack = false,
             )
         },
@@ -70,6 +74,9 @@ fun FavoritesScreen(
                     team = it,
                     modifier = modifier
                         .padding(12.dp,24.dp)
+                        .clickable {
+                            navigateToOverviewScreen()
+                        }
                 )
             }
         }

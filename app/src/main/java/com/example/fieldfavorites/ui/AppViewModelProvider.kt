@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.fieldfavorites.FieldFavoritesApplication
 import com.example.fieldfavorites.ui.screens.favorites.FavoriteViewModel
 import com.example.fieldfavorites.ui.screens.leagues.LeagueViewModel
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewViewModel
 import com.example.fieldfavorites.ui.screens.teams.TeamViewModel
 
 object AppViewModelProvider {
@@ -22,6 +23,10 @@ object AppViewModelProvider {
 
         initializer {
             FavoriteViewModel(fieldFavoritesApplication().container.favoriteRepository)
+        }
+
+        initializer {
+            TeamOverviewViewModel(this.createSavedStateHandle())
         }
     }
 }

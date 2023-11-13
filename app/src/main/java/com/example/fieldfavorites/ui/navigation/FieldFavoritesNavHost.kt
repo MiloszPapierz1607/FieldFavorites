@@ -16,6 +16,8 @@ import com.example.fieldfavorites.ui.screens.favorites.FavoritesDestination
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesScreen
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesDestination
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesScreen
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewDestination
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreen
 import com.example.fieldfavorites.ui.screens.teams.TeamsDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsScreen
 
@@ -64,11 +66,23 @@ fun FieldFavoritesNavHost(
                 route = FavoritesDestination.route
             ) {
                 FavoritesScreen(
+                    navigateToOverviewScreen = {
+                       navController.navigate(TeamOverviewDestination.route)
+                    },
                 navigateToLeagueScreen = {
                     navController.navigate(LeaguesDestination.route)
                 },
                 favoriteViewModel = favoriteViewModel
                 )
+            }
+
+            composable(
+                route = TeamOverviewDestination.route,
+                arguments = listOf(navArgument(TeamOverviewDestination.itemIdArg) {
+                    type = NavType.IntType
+                })
+            ) {
+                TeamOverviewScreen()
             }
         }
     }
