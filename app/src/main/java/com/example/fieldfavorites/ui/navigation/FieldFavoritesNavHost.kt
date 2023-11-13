@@ -16,6 +16,8 @@ import com.example.fieldfavorites.ui.screens.favorites.FavoritesDestination
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesScreen
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesDestination
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesScreen
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewDestination
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreen
 import com.example.fieldfavorites.ui.screens.teams.TeamsDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsScreen
 
@@ -36,8 +38,12 @@ fun FieldFavoritesNavHost(
 
             composable(route = LeaguesDestination.route) {
                 LeaguesScreen(
+                    canNavigateBack = favoriteUiState.favoriteTeams.isNotEmpty(),
                     navigateToTeams = {
                         navController.navigate("${TeamsDestination.route}/${it}")
+                    },
+                    navigateToFavorites = {
+                        navController.navigate(FavoritesDestination.route)
                     }
                 )
             }
@@ -49,6 +55,7 @@ fun FieldFavoritesNavHost(
                 })
             ) {
                 TeamsScreen(
+                    favoriteTeamsIds = favoriteUiState.favoriteTeams.map { it.id },
                     navigateBack = {
                         navController.popBackStack()
                     }
@@ -58,7 +65,24 @@ fun FieldFavoritesNavHost(
             composable(
                 route = FavoritesDestination.route
             ) {
-                FavoritesScreen(favoriteViewModel = favoriteViewModel)
+                FavoritesScreen(
+                    navigateToOverviewScreen = {
+                       navController.navigate(TeamOverviewDestination.route)
+                    },
+                navigateToLeagueScreen = {
+                    navController.navigate(LeaguesDestination.route)
+                },
+                favoriteViewModel = favoriteViewModel
+                )
+            }
+
+            composable(
+                route = TeamOverviewDestination.route,
+                arguments = listOf(navArgument(TeamOverviewDestination.itemIdArg) {
+                    type = NavType.IntType
+                })
+            ) {
+                TeamOverviewScreen()
             }
         }
     }

@@ -38,9 +38,9 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
+import com.example.fieldfavorites.R
 import com.example.fieldfavorites.ui.AppViewModelProvider
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
-import com.example.fieldfavorites.R
 
 object LeaguesDestination : NavigationDestination {
     override val route = "leagues"
@@ -49,6 +49,8 @@ object LeaguesDestination : NavigationDestination {
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LeaguesScreen(
+    navigateToFavorites: () -> Unit,
+    canNavigateBack: Boolean = false,
     navigateToTeams: (Int) -> Unit,
     modifier: Modifier = Modifier,
     leagueViewModel: LeagueViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -65,7 +67,8 @@ fun LeaguesScreen(
         topBar = {
             FieldFavoritesTopAppBar(
                 title = stringResource(R.string.leagues_screen_title),
-                canNavigateBack = false
+                canNavigateBack = canNavigateBack,
+                navigateUp = navigateToFavorites
             )
         }
     ) {

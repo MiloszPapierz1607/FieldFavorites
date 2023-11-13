@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.twotone.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -42,6 +44,7 @@ import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.Team
 import com.example.fieldfavorites.ui.AppViewModelProvider
+import com.example.fieldfavorites.ui.components.LoadingComponent
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
 
 object TeamsDestination : NavigationDestination {
@@ -52,8 +55,14 @@ object TeamsDestination : NavigationDestination {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TeamsScreen(navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun TeamsScreen(
+    favoriteTeamsIds: List<Int>,
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val teamUiState by teamViewModel.uiState.collectAsState()
+    val teamApiState = teamViewModel.teamApiState
     val teams = teamUiState.teams
 
     Scaffold(
@@ -65,25 +74,36 @@ fun TeamsScreen(navigateBack: () -> Unit,modifier: Modifier = Modifier,teamViewM
             )
         }
     ) {
-            LazyColumn(
-                modifier = modifier.padding(it)
-            ) {
-                items(teams) {
-                    TeamCard(
-                        addToFavorite = {
-                            teamViewModel.insertFavoriteTeam(it)
-                        },
-                        team = it,
-                        modifier = modifier
-                            .padding(12.dp, 24.dp)
-                    )
+        Box(
+            modifier = modifier
+                .padding(it)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            when(teamApiState) {
+                is TeamApiState.Loading -> LoadingComponent()
+                is TeamApiState.Error -> Text("Something went wrong. Try again later")
+                is TeamApiState.Success -> LazyColumn {
+                    items(teams) {
+                        TeamCard(
+                            addToFavorite = {
+                                teamViewModel.insertFavoriteTeam(it)
+                            },
+                            team = it,
+                            isAdded = favoriteTeamsIds.contains(it.id),
+                            modifier = modifier
+                                .padding(12.dp, 24.dp)
+                        )
+                    }
                 }
             }
         }
+    }
 }
 
 @Composable
 fun TeamCard(
+    isAdded: Boolean = false,
     addToFavorite:() -> Unit,
     team:Team,
     modifier: Modifier = Modifier
@@ -133,9 +153,13 @@ fun TeamCard(
                 contentAlignment = Alignment.Center,
 
             ) {
-                IconButton(onClick = {addToFavorite()}) {
+                IconButton(onClick = {
+                    if(!isAdded) {
+                        addToFavorite()
+                    }
+                }) {
                     Icon(
-                        imageVector = Icons.TwoTone.Star,
+                        imageVector = if(isAdded) Icons.Filled.Star else Icons.TwoTone.Star,
                         contentDescription = null,
                     )
                 }
