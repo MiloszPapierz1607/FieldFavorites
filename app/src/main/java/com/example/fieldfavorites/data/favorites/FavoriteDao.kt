@@ -1,7 +1,6 @@
 package com.example.fieldfavorites.data.favorites
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,6 +18,6 @@ interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(team: Team)
 
-    @Delete
-    suspend fun delete(team: Team)
+    @Query("DELETE FROM teams WHERE id = :teamId")
+    suspend fun delete(teamId: Int)
 }

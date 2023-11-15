@@ -8,5 +8,5 @@ class OfflineFavoriteRepository(private val favoriteDao: FavoriteDao) : Favorite
 
     override suspend fun insertFavoriteTeam(team: Team) = favoriteDao.insert(team)
 
-    override suspend fun deleteTeam(team: Team) = favoriteDao.delete(team)
+    override suspend fun deleteTeam(teamId: Int) = favoriteDao.delete(teamId)
 }

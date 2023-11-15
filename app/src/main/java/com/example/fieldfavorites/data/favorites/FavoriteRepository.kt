@@ -20,5 +20,5 @@ interface FavoriteRepository {
     /**
      * Delete team from the data source
      */
-    suspend fun deleteTeam(team: Team)
+    suspend fun deleteTeam(teamId: Int)
 }

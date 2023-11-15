@@ -83,7 +83,15 @@ fun FieldFavoritesNavHost(
                     navArgument(TeamOverviewDestination.itemNameArg) {type = NavType.StringType}
                 )
             ) {
-                TeamOverviewScreen()
+                TeamOverviewScreen(
+                    goBack = {
+                             navController.navigate(FavoritesDestination.route)
+                    },
+                    removeFromFavorite = {
+                        favoriteViewModel.removeFavoriteTeam(it)
+                        navController.navigate(if (favoriteUiState.favoriteTeams.isEmpty()) LeaguesDestination.route else FavoritesDestination.route)
+                    }
+                )
             }
         }
     }

@@ -2,12 +2,19 @@ package com.example.fieldfavorites
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -24,8 +31,14 @@ fun FieldFavoritesTopAppBar(
     title:String,
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
-    navigateUp: () -> Unit = {}
+    navigateUp: () -> Unit = {},
+    showActionsMenu: Boolean = false,
+    items: List<ActionMenuItem> = listOf()
 ) {
+    var menuExpanded by remember {
+        mutableStateOf(false)
+    }
+
     CenterAlignedTopAppBar(
         title = {Text(title)},
         modifier = modifier,
@@ -38,6 +51,43 @@ fun FieldFavoritesTopAppBar(
                     )
                 }
             }
+        },
+        actions = {
+            if (showActionsMenu) {
+                IconButton(onClick = { menuExpanded = !menuExpanded}) {
+                    Icon(
+                        imageVector = Icons.Filled.MoreVert,
+                        contentDescription = null
+                    )
+                }
+
+
+                DropdownMenu(
+                    expanded = menuExpanded,
+                    onDismissRequest = { menuExpanded = false }
+                ) {
+                    items.forEach {
+                        DropdownMenuItem(
+                            text = {
+                                   Text(it.title)
+                            },
+                            onClick = {
+                                it.onClick()
+                            }
+                        )
+                    }
+                }
+            }
         }
     )
+}
+
+sealed interface ActionMenuItem {
+    val title: String
+    val onClick: () -> Unit
+
+    data class NeverShown(
+        override  val title: String,
+        override val onClick: () -> Unit
+    ) : ActionMenuItem
 }
