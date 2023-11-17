@@ -1,14 +1,16 @@
 package com.example.fieldfavorites.ui.screens.teamoverview
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fieldfavorites.data.favorites.FavoriteRepository
+import com.example.fieldfavorites.data.standings.StandingsRepository
 import com.example.fieldfavorites.data.teamoverview.TeamOverviewRepository
 import com.example.fieldfavorites.model.FixtureRow
+import com.example.fieldfavorites.model.Standings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,18 +18,21 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class TeamOverviewUiState(
-    val nextFixture: FixtureRow? = null
+    val nextFixture: FixtureRow? = null,
+    val standings: List<Standings> = listOf()
 )
 
 sealed interface TeamOverviewApiState {
-    data class Success(val nextFixture: FixtureRow) : TeamOverviewApiState
+    data class Success(val nextFixture: FixtureRow,val standings: List<Standings>) : TeamOverviewApiState
     object Loading : TeamOverviewApiState
     object Error : TeamOverviewApiState
 }
 
 class TeamOverviewViewModel(
     savedStateHandle: SavedStateHandle,
-    private val teamOverviewRepository: TeamOverviewRepository
+    private val teamOverviewRepository: TeamOverviewRepository,
+    private val standingsRepository: StandingsRepository,
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
     private val _teamId: Int = checkNotNull(savedStateHandle[TeamOverviewDestination.itemIdArg])
     val teamId: Int get() = _teamId
@@ -41,21 +46,25 @@ class TeamOverviewViewModel(
         private set
 
     init {
-        getFixtures()
+        getInitialData()
     }
 
-    private fun getFixtures() {
+    private fun getInitialData() {
         viewModelScope.launch {
             try {
                 val firstFixture = teamOverviewRepository.getFixturesByTeamId(_teamId,1)[0]
+                val leagueId = favoriteRepository.getTeamById(_teamId)?.leagueId ?: 0
+
+                if(leagueId == 0) throw Exception("Could not get a team with given id from database")
+
+                val standings = standingsRepository.getStandingsForLeague(leagueId)
 
                 _uiState.update {
-                    it.copy(nextFixture = firstFixture)
+                    it.copy(nextFixture = firstFixture,standings = standings)
                 }
 
-                teamOverviewApiState = TeamOverviewApiState.Success(firstFixture)
+                teamOverviewApiState = TeamOverviewApiState.Success(firstFixture, standings)
             } catch (e: Exception) {
-                Log.v("Test",e.message.toString())
                 teamOverviewApiState = TeamOverviewApiState.Error
             }
         }

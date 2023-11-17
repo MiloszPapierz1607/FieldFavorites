@@ -9,7 +9,7 @@ class ApiTeamRepository(
     override suspend fun getAllTeamsFromLeague(leagueId: Int) : List<Team> {
        val leaguesResponse =  footballApiService.getLeagues(leagueId)
         return leaguesResponse.response.asList().map {
-            it.team
+            Team(id = it.team.id, name = it.team.name, leagueId = leagueId, logo = it.team.logo)
         }
     }
 }

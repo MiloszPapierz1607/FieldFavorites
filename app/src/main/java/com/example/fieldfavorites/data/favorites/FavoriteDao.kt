@@ -15,6 +15,9 @@ interface FavoriteDao {
     @Query("SELECT * FROM teams")
     fun getAllFavorites(): Flow<List<Team>>
 
+    @Query("SELECT * FROM teams WHERE id = :teamId")
+    suspend fun getTeamById(teamId: Int): Team?
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(team: Team)
 

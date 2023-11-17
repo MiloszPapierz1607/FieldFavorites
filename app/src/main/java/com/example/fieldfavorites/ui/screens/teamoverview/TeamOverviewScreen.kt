@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,7 +22,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
@@ -29,6 +33,7 @@ import com.example.fieldfavorites.ActionMenuItem
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.model.FixtureRow
 import com.example.fieldfavorites.model.FixtureTeam
+import com.example.fieldfavorites.model.Standings
 import com.example.fieldfavorites.ui.AppViewModelProvider
 import com.example.fieldfavorites.ui.components.LoadingComponent
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
@@ -70,18 +75,71 @@ fun TeamOverviewScreen(
         Box(
             modifier = modifier
                 .padding(it)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             contentAlignment = Alignment.Center
         ) {
             when(teamOverviewApiState) {
                 is TeamOverviewApiState.Loading -> LoadingComponent()
                 is TeamOverviewApiState.Error -> Text("Something went wrong. Try again later!")
-                is TeamOverviewApiState.Success -> NextFixtureCard(
-                   nextFixture= teamOverviewUiState.nextFixture!!,
-                    modifier = Modifier.padding(8.dp,12.dp)
-                )
+                is TeamOverviewApiState.Success -> OverviewScreen(teamOverviewUiState.nextFixture!!,teamOverviewUiState.standings)
+
             }
 
+        }
+    }
+}
+
+@Composable
+fun OverviewScreen(nextFixture: FixtureRow, standings: List<Standings>, modifier: Modifier = Modifier) {
+    Column(
+        modifier = Modifier
+            .padding(8.dp,12.dp)
+    ) {
+        Text(
+            text="Next game",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        NextFixtureCard(nextFixture= nextFixture)
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Standings",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Standings(standings)
+    }
+}
+
+@Composable
+fun Standings(standings: List<Standings>,modifier: Modifier = Modifier) {
+    Row {
+        Text("",modifier = Modifier.weight(2f))
+        Text("G",modifier = Modifier.weight(0.5f))
+        Text("W",modifier = Modifier.weight(0.5f))
+        Text("D",modifier = Modifier.weight(0.5f))
+        Text("L",modifier = Modifier.weight(0.5f))
+        Text("P",modifier = Modifier.weight(0.5f))
+
+    }
+    Column {
+        standings.forEach {
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 12.dp)
+            ) {
+                Text("${it.rank}. ${it.team.name}",modifier = Modifier.weight(2f))
+                Text(it.all.played.toString(),modifier = Modifier.weight(0.5f))
+                Text(it.all.win.toString(),modifier = Modifier.weight(0.5f))
+                Text(it.all.draw.toString(),modifier = Modifier.weight(0.5f))
+                Text(it.all.lose.toString(),modifier = Modifier.weight(0.5f))
+                Text(it.points.toString(),modifier = Modifier.weight(0.5f))
+            }
         }
     }
 }

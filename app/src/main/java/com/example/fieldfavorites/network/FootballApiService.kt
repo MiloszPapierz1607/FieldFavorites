@@ -2,6 +2,7 @@ package com.example.fieldfavorites.network
 
 import com.example.fieldfavorites.model.ApiFixtureResponse
 import com.example.fieldfavorites.model.ApiResponse
+import com.example.fieldfavorites.model.StandingApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,4 +14,7 @@ interface FootballApiService {
 
     @GET("fixtures")
     suspend fun getFixturesByTeamId(@Query("team")teamId: Int,@Query("next") nextGamesCount: Int,@Query("season") season: Int = currentSeasonYear) : ApiFixtureResponse
+
+    @GET("standings")
+    suspend fun getStandingsForLeague(@Query("league") leagueId:Int,@Query("season") season: Int = currentSeasonYear): StandingApiResponse
 }

@@ -11,14 +11,23 @@ data class ApiResponse(
 
 @Serializable
 data class ResponseObject(
-    val team: Team,
+    val team: TeamFromApi,
+)
+
+//data class needed to solve issue of unknown leagueId in teamoverview
+@Serializable
+data class TeamFromApi(
+    val id: Int,
+    val name: String,
+    val logo: String
 )
 
 @Serializable
-@Entity(tableName = "teams")
+@Entity("teams")
 data class Team(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,
-    val logo: String
+    val logo: String,
+    val leagueId: Int
 )

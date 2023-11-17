@@ -26,7 +26,7 @@ object AppViewModelProvider {
         }
 
         initializer {
-            TeamOverviewViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamOverviewRepository)
+            TeamOverviewViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamOverviewRepository,fieldFavoritesApplication().container.standingsRepository,fieldFavoritesApplication().container.favoriteRepository)
         }
     }
 }
