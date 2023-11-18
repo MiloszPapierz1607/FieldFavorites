@@ -23,7 +23,8 @@ data class TeamOverviewUiState(
 )
 
 sealed interface TeamOverviewApiState {
-    data class Success(val nextFixture: FixtureRow,val standings: List<Standings>) : TeamOverviewApiState
+    data class Success(val nextFixture: FixtureRow,val standings: List<Standings>) :
+        TeamOverviewApiState
     object Loading : TeamOverviewApiState
     object Error : TeamOverviewApiState
 }
@@ -34,9 +35,9 @@ class TeamOverviewViewModel(
     private val standingsRepository: StandingsRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
-    private val _teamId: Int = checkNotNull(savedStateHandle[TeamOverviewDestination.itemIdArg])
+    private val _teamId: Int = checkNotNull(savedStateHandle[TeamOverviewScreenDestination.itemIdArg])
     val teamId: Int get() = _teamId
-    private val _teamName: String = savedStateHandle[TeamOverviewDestination.itemNameArg] ?: ""
+    private val _teamName: String = savedStateHandle[TeamOverviewScreenDestination.itemNameArg] ?: ""
     val teamName: String get() = _teamName
 
     private val _uiState = MutableStateFlow(TeamOverviewUiState())

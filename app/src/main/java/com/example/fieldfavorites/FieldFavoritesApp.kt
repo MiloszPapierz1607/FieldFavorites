@@ -1,8 +1,12 @@
 package com.example.fieldfavorites
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -15,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
@@ -24,6 +30,36 @@ import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
 fun FieldFavoritesApp(navController: NavHostController = rememberNavController()) {
     FieldFavoritesNavHost(navController = navController)
 }
+
+@Composable
+fun FieldFavoritesBottomAppBar(
+    bottomAppBarItems: List<BottomAppBarItem>
+) {
+    BottomAppBar(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        bottomAppBarItems.forEach {
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                IconButton(onClick = it.onClick) {
+                    Icon(
+                        it.icon,
+                        ""
+                    )
+                }
+                if(it is BottomAppBarItem.BottomAppBarItemWithLabel) {
+                    Text(it.label)
+                }
+            }
+        }
+    }
+}
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,4 +126,20 @@ sealed interface ActionMenuItem {
         override  val title: String,
         override val onClick: () -> Unit
     ) : ActionMenuItem
+}
+
+sealed interface BottomAppBarItem {
+    val icon: ImageVector
+    val onClick: () -> Unit
+
+    data class BottomAppBarItemDefault(
+        override val icon: ImageVector,
+        override val onClick: () -> Unit
+    ) : BottomAppBarItem
+
+    data class BottomAppBarItemWithLabel(
+        override val icon: ImageVector,
+        override val onClick: () -> Unit,
+        val label: String
+    ) : BottomAppBarItem
 }

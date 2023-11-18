@@ -16,8 +16,8 @@ import com.example.fieldfavorites.ui.screens.favorites.FavoritesDestination
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesScreen
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesDestination
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesScreen
-import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewDestination
 import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreen
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreenDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsScreen
 
@@ -67,7 +67,7 @@ fun FieldFavoritesNavHost(
             ) {
                 FavoritesScreen(
                     navigateToOverviewScreen = { teamId,teamName ->
-                       navController.navigate("${TeamOverviewDestination.route}/$teamId/$teamName")
+                       navController.navigate("${TeamOverviewScreenDestination.route}/$teamId/$teamName")
                     },
                 navigateToLeagueScreen = {
                     navController.navigate(LeaguesDestination.route)
@@ -77,10 +77,10 @@ fun FieldFavoritesNavHost(
             }
 
             composable(
-                route = TeamOverviewDestination.routeWithArgs,
+                route = TeamOverviewScreenDestination.routeWithArgs,
                 arguments = listOf(
-                    navArgument(TeamOverviewDestination.itemIdArg) { type = NavType.IntType },
-                    navArgument(TeamOverviewDestination.itemNameArg) {type = NavType.StringType}
+                    navArgument(TeamOverviewScreenDestination.itemIdArg) { type = NavType.IntType },
+                    navArgument(TeamOverviewScreenDestination.itemNameArg) {type = NavType.StringType}
                 )
             ) {
                 TeamOverviewScreen(
@@ -93,6 +93,7 @@ fun FieldFavoritesNavHost(
                     }
                 )
             }
+
         }
     }
 }
