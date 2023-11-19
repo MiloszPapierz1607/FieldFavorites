@@ -1,7 +1,6 @@
 package com.example.fieldfavorites.data.favorites
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,9 +15,12 @@ interface FavoriteDao {
     @Query("SELECT * FROM teams")
     fun getAllFavorites(): Flow<List<Team>>
 
+    @Query("SELECT * FROM teams WHERE id = :teamId")
+    suspend fun getTeamById(teamId: Int): Team?
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(team: Team)
 
-    @Delete
-    suspend fun delete(team: Team)
+    @Query("DELETE FROM teams WHERE id = :teamId")
+    suspend fun delete(teamId: Int)
 }

@@ -31,7 +31,7 @@ class TeamViewModel(
     private val teamsRepository: TeamRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
-    private val itemId: Int = checkNotNull(savedStateHandle[TeamsDestination.itemIdArg])
+    private val _itemId: Int = checkNotNull(savedStateHandle[TeamsDestination.itemIdArg])
     private val _uiState = MutableStateFlow(TeamUiState())
     val uiState: StateFlow<TeamUiState> = _uiState.asStateFlow()
 
@@ -45,7 +45,7 @@ class TeamViewModel(
     private fun getTeams() {
         viewModelScope.launch {
             try {
-                val teams = teamsRepository.getAllTeamsFromLeague(itemId)
+                val teams = teamsRepository.getAllTeamsFromLeague(_itemId)
                     .sortedBy {
                         it.name
                     }

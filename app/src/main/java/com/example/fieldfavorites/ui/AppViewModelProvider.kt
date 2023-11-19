@@ -1,6 +1,6 @@
 package com.example.fieldfavorites.ui
 
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
@@ -26,7 +26,7 @@ object AppViewModelProvider {
         }
 
         initializer {
-            TeamOverviewViewModel(this.createSavedStateHandle())
+            TeamOverviewViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamOverviewRepository,fieldFavoritesApplication().container.standingsRepository,fieldFavoritesApplication().container.favoriteRepository)
         }
     }
 }

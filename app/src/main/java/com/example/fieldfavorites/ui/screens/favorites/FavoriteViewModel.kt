@@ -28,4 +28,10 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
             }
         }
     }
+
+    fun removeFavoriteTeam(id: Int) {
+        viewModelScope.launch {
+            favoriteRepository.deleteTeam(id)
+        }
+    }
 }

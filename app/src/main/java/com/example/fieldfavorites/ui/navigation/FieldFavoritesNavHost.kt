@@ -16,8 +16,8 @@ import com.example.fieldfavorites.ui.screens.favorites.FavoritesDestination
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesScreen
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesDestination
 import com.example.fieldfavorites.ui.screens.leagues.LeaguesScreen
-import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewDestination
 import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreen
+import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreenDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsScreen
 
@@ -66,8 +66,8 @@ fun FieldFavoritesNavHost(
                 route = FavoritesDestination.route
             ) {
                 FavoritesScreen(
-                    navigateToOverviewScreen = {
-                       navController.navigate(TeamOverviewDestination.route)
+                    navigateToOverviewScreen = { teamId,teamName ->
+                       navController.navigate("${TeamOverviewScreenDestination.route}/$teamId/$teamName")
                     },
                 navigateToLeagueScreen = {
                     navController.navigate(LeaguesDestination.route)
@@ -77,13 +77,23 @@ fun FieldFavoritesNavHost(
             }
 
             composable(
-                route = TeamOverviewDestination.route,
-                arguments = listOf(navArgument(TeamOverviewDestination.itemIdArg) {
-                    type = NavType.IntType
-                })
+                route = TeamOverviewScreenDestination.routeWithArgs,
+                arguments = listOf(
+                    navArgument(TeamOverviewScreenDestination.itemIdArg) { type = NavType.IntType },
+                    navArgument(TeamOverviewScreenDestination.itemNameArg) {type = NavType.StringType}
+                )
             ) {
-                TeamOverviewScreen()
+                TeamOverviewScreen(
+                    goBack = {
+                             navController.navigate(FavoritesDestination.route)
+                    },
+                    removeFromFavorite = {
+                        favoriteViewModel.removeFavoriteTeam(it)
+                        navController.navigate(if (favoriteUiState.favoriteTeams.isEmpty()) LeaguesDestination.route else FavoritesDestination.route)
+                    }
+                )
             }
+
         }
     }
 }
