@@ -10,6 +10,7 @@ import com.example.fieldfavorites.data.favorites.FavoriteRepository
 import com.example.fieldfavorites.data.standings.StandingsRepository
 import com.example.fieldfavorites.data.teamoverview.TeamOverviewRepository
 import com.example.fieldfavorites.model.FixtureRow
+import com.example.fieldfavorites.model.PlayerRow
 import com.example.fieldfavorites.model.Standings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,11 +20,12 @@ import kotlinx.coroutines.launch
 
 data class TeamOverviewUiState(
     val nextFixture: FixtureRow? = null,
-    val standings: List<Standings> = listOf()
+    val standings: List<Standings> = listOf(),
+    val playerStats: List<PlayerRow> = listOf()
 )
 
 sealed interface TeamOverviewApiState {
-    data class Success(val nextFixture: FixtureRow,val standings: List<Standings>) :
+    data class Success(val nextFixture: FixtureRow,val standings: List<Standings>,val playerStats: List<PlayerRow>) :
         TeamOverviewApiState
     object Loading : TeamOverviewApiState
     object Error : TeamOverviewApiState
@@ -60,11 +62,13 @@ class TeamOverviewViewModel(
 
                 val standings = standingsRepository.getStandingsForLeague(leagueId)
 
+                val playerStats = teamOverviewRepository.getPlayersByTeamId(_teamId)
+
                 _uiState.update {
-                    it.copy(nextFixture = firstFixture,standings = standings)
+                    it.copy(nextFixture = firstFixture,standings = standings,playerStats= playerStats)
                 }
 
-                teamOverviewApiState = TeamOverviewApiState.Success(firstFixture, standings)
+                teamOverviewApiState = TeamOverviewApiState.Success(firstFixture, standings,playerStats)
             } catch (e: Exception) {
                 teamOverviewApiState = TeamOverviewApiState.Error
             }

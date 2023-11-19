@@ -1,10 +1,8 @@
 package com.example.fieldfavorites.ui.screens.teamoverview
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -76,8 +74,7 @@ fun TeamOverviewScreen(
         Box(
             modifier = modifier
                 .padding(it)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
             when(teamOverviewApiState) {
@@ -88,7 +85,7 @@ fun TeamOverviewScreen(
                         nextFixture = teamOverviewUiState.nextFixture!!,
                         standings = teamOverviewUiState.standings
                     )
-                    TeamOverviewScreenContent.TeamOverviewPlayersScreenContent -> TeamOverviewPlayersScreen()
+                    TeamOverviewScreenContent.TeamOverviewPlayersScreenContent -> TeamOverviewPlayersScreen(teamOverviewUiState.playerStats)
                 }
             }
         }
