@@ -1,5 +1,7 @@
 package com.example.fieldfavorites.ui.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -52,7 +54,31 @@ fun FieldFavoritesNavHost(
                 route = TeamsDestination.routeWithArgs,
                 arguments = listOf(navArgument(TeamsDestination.itemIdArg) {
                     type = NavType.IntType
-                })
+                }),
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                        animationSpec = tween(700)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                        animationSpec = tween(700)
+                    )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                        animationSpec = tween(700)
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                        animationSpec = tween(700)
+                    )
+                }
             ) {
                 TeamsScreen(
                     favoriteTeamsIds = favoriteUiState.favoriteTeams.map { it.id },
@@ -81,7 +107,31 @@ fun FieldFavoritesNavHost(
                 arguments = listOf(
                     navArgument(TeamOverviewScreenDestination.itemIdArg) { type = NavType.IntType },
                     navArgument(TeamOverviewScreenDestination.itemNameArg) {type = NavType.StringType}
-                )
+                ),
+                enterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                        animationSpec = tween(700)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                        animationSpec = tween(700)
+                    )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                        animationSpec = tween(700)
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                        animationSpec = tween(700)
+                    )
+                }
             ) {
                 TeamOverviewScreen(
                     goBack = {
