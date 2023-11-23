@@ -7,7 +7,7 @@ class ApiTeamRepository(
     private val footballApiService: FootballApiService
 ) : TeamRepository{
     override suspend fun getAllTeamsFromLeague(leagueId: Int) : List<Team> {
-       val leaguesResponse =  footballApiService.getLeagues(leagueId)
+       val leaguesResponse =  footballApiService.getTeamsByLeagueId(leagueId)
         return leaguesResponse.response.asList().map {
             Team(id = it.team.id, name = it.team.name, leagueId = leagueId, logo = it.team.logo)
         }

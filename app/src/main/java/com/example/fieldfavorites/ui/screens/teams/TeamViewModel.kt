@@ -16,25 +16,43 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
+/**
+ * Ui State for [TeamsScreen]
+ * */
 data class TeamUiState(
     val teams: List<Team> = listOf()
 )
 
+/**
+ * Interface that holds the api state for [TeamsScreen]
+ * */
 sealed interface TeamApiState {
     data class Success(val teams: List<Team>) : TeamApiState
     object Loading : TeamApiState
     object Error : TeamApiState
 }
 
+/**
+ * ViewModel to retrieve all teams for a league using the given repositories
+ * */
 class TeamViewModel(
     savedStateHandle: SavedStateHandle,
     private val teamsRepository: TeamRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
+    /**
+     * Holds the id of a league the user is currently on.
+     * */
     private val _itemId: Int = checkNotNull(savedStateHandle[TeamsDestination.itemIdArg])
     private val _uiState = MutableStateFlow(TeamUiState())
+    /**
+     * Holds [TeamUiState] for [TeamsScreen]
+     * */
     val uiState: StateFlow<TeamUiState> = _uiState.asStateFlow()
 
+    /**
+     * Holds [TeamApiState] for [TeamsScreen]
+     * */
     var teamApiState: TeamApiState by mutableStateOf(TeamApiState.Loading)
         private set
 
@@ -42,6 +60,9 @@ class TeamViewModel(
         getTeams()
     }
 
+    /**
+     * Fetches the teams from [TeamRepository] data source for a specific league.
+     * */
     private fun getTeams() {
         viewModelScope.launch {
             try {
@@ -64,6 +85,9 @@ class TeamViewModel(
         }
     }
 
+    /**
+     * Inserts a [Team] to the [FavoriteRepository] data source.
+     * */
     fun insertFavoriteTeam(team: Team) {
         viewModelScope.launch {
             favoriteRepository.insertFavoriteTeam(team)

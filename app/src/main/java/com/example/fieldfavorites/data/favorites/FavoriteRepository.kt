@@ -13,17 +13,17 @@ interface FavoriteRepository {
     fun getAllFavoriteTeamsStream() : Flow<List<Team>>
 
     /**
-     * Retrieve a team by id
+     * Retrieve a team by given [teamId]
     * */
     suspend fun getTeamById(teamId: Int) : Team?
 
     /**
-     * Insert team in the data source
+     * Insert a given [team] in the data source
      */
     suspend fun insertFavoriteTeam(team:Team)
 
     /**
-     * Delete team from the data source
+     * Delete a [Team]  by given [teamId] from the data source
      */
     suspend fun deleteTeam(teamId: Int)
 }

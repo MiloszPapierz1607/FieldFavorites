@@ -23,6 +23,9 @@ import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewScreenDest
 import com.example.fieldfavorites.ui.screens.teams.TeamsDestination
 import com.example.fieldfavorites.ui.screens.teams.TeamsScreen
 
+/**
+ * Provides Navigation graph for the application.
+ * */
 @Composable
 fun FieldFavoritesNavHost(
     navController: NavHostController,

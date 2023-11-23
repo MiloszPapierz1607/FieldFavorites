@@ -18,12 +18,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Ui State for TeamOverviewScreen
+ * */
 data class TeamOverviewUiState(
     val nextFixture: FixtureRow? = null,
     val standings: List<Standings> = listOf(),
     val playerStats: List<PlayerRow> = listOf()
 )
 
+/**
+ * Interface that holds the api state for TeamOverviewScreen
+ * */
 sealed interface TeamOverviewApiState {
     data class Success(val nextFixture: FixtureRow,val standings: List<Standings>,val playerStats: List<PlayerRow>) :
         TeamOverviewApiState
@@ -31,6 +37,9 @@ sealed interface TeamOverviewApiState {
     object Error : TeamOverviewApiState
 }
 
+/**
+ * ViewModel to retrieve all items from the repositories to show the overview of a team
+ * */
 class TeamOverviewViewModel(
     savedStateHandle: SavedStateHandle,
     private val teamOverviewRepository: TeamOverviewRepository,
@@ -43,8 +52,14 @@ class TeamOverviewViewModel(
     val teamName: String get() = _teamName
 
     private val _uiState = MutableStateFlow(TeamOverviewUiState())
+    /**
+     * Holds [TeamOverviewUiState] for the [TeamOverviewScreen]
+     * */
     val uiState: StateFlow<TeamOverviewUiState> = _uiState.asStateFlow()
 
+    /**
+     * Holds [TeamOverviewApiState] for the [TeamOverviewScreen]
+     * */
     var teamOverviewApiState: TeamOverviewApiState by mutableStateOf(TeamOverviewApiState.Loading)
         private set
 
@@ -52,6 +67,11 @@ class TeamOverviewViewModel(
         getInitialData()
     }
 
+    /**
+     * A function that fetches initial data such as the next upcoming [Standings], [List] of [PlayerRow] and [FixtureRow] using
+     * [StandingsRepository], [TeamOverviewRepository] and [FavoriteRepository].
+     * If the leagueId in the viewmodel equals 0 a [Exception] is thrown
+     * */
     private fun getInitialData() {
         viewModelScope.launch {
             try {

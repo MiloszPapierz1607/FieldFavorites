@@ -19,6 +19,9 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
+/**
+ * App container for dependency injection.
+ * */
 interface AppContainer {
     val leagueRepository: LeagueRepository
     val teamRepository: TeamRepository
@@ -51,7 +54,7 @@ class AppDataContainer(private val context: Context) : AppContainer {
         .build()
 
     /**
-     * Retrofit service object for creating api calls
+     * Retrofit service object for creating api calls to football-api
      */
     private val retrofitService: FootballApiService by lazy {
         retrofit.create(FootballApiService::class.java)
@@ -65,26 +68,29 @@ class AppDataContainer(private val context: Context) : AppContainer {
     }
 
     /**
-     * Implementation for [TeamRepository] that fetches teams from football-api
+     * Implementation for [TeamRepository] that fetches teams using [FootballApiService]
      */
     override val teamRepository: TeamRepository by lazy {
         ApiTeamRepository(retrofitService)
     }
 
     /**
-     * Implementation for [FavoriteRepository]
+     * Implementation for [FavoriteRepository] that returns favorite teams from a user using [FavoriteDatabase]
      */
     override val favoriteRepository: FavoriteRepository by lazy {
         OfflineFavoriteRepository(FavoriteDatabase.getDatabase(context).favoriteDao())
     }
 
     /**
-     * Implementation for [TeamOverviewRepository]
+     * Implementation for [TeamOverviewRepository] that fetches data such as next fixture and players using [FootballApiService]
      */
     override val teamOverviewRepository: ApiTeamOverviewRepository by lazy {
         ApiTeamOverviewRepository(retrofitService)
     }
 
+    /**
+    * Implementation for [StandingsRepository] that fetches the current standing using [FootballApiService]
+    * */
     override val standingsRepository: StandingsApiRepository by lazy {
         StandingsApiRepository(retrofitService)
     }
