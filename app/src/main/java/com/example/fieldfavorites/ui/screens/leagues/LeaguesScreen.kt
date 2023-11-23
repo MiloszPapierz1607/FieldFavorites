@@ -12,12 +12,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,6 +36,7 @@ import coil.request.ImageRequest
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.ui.AppViewModelProvider
+import com.example.fieldfavorites.ui.components.ReusableCard
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
 
 object LeaguesDestination : NavigationDestination {
@@ -116,15 +113,12 @@ fun LeagueCard(
     flagSvgUrl: String,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = modifier,
+
+    ReusableCard(
+        modifier = modifier
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .sizeIn(minHeight = 52.dp),
+            modifier = it,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(

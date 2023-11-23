@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +22,7 @@ import coil.request.ImageRequest
 import com.example.fieldfavorites.model.FixtureRow
 import com.example.fieldfavorites.model.FixtureTeam
 import com.example.fieldfavorites.model.Standings
+import com.example.fieldfavorites.ui.components.ReusableCard
 
 
 @Composable
@@ -93,18 +91,14 @@ fun Standings(standings: List<Standings>,modifier: Modifier = Modifier) {
 
 @Composable
 fun NextFixtureCard(nextFixture: FixtureRow,modifier: Modifier = Modifier) {
-    Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    ReusableCard(
         modifier = modifier
     ) {
         val indexOfHyphen = nextFixture.league.round.indexOf('-')
         val matchday = nextFixture.league.round.substring(indexOfHyphen+1)
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .sizeIn(minHeight = 52.dp),
+            modifier = it,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
