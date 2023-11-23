@@ -7,6 +7,9 @@ import androidx.room.RoomDatabase
 import com.example.fieldfavorites.data.favorites.FavoriteDao
 import com.example.fieldfavorites.model.Team
 
+/**
+ * Database class with a singleton Instance object.
+ * */
 @Database(entities = [Team::class], version = 1, exportSchema = false)
 abstract class FavoriteDatabase : RoomDatabase() {
 

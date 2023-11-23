@@ -1,5 +1,6 @@
 package com.example.fieldfavorites.ui
 
+import android.app.Application
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -11,6 +12,9 @@ import com.example.fieldfavorites.ui.screens.leagues.LeagueViewModel
 import com.example.fieldfavorites.ui.screens.teamoverview.TeamOverviewViewModel
 import com.example.fieldfavorites.ui.screens.teams.TeamViewModel
 
+/**
+ * Provides Factory to create instance of ViewModel for the entire FieldFavorites app
+ * */
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
@@ -31,5 +35,9 @@ object AppViewModelProvider {
     }
 }
 
+/**
+ * Extension function to queries for [Application] object and return an instance of
+ * [FieldFavoritesApplication]
+ * */
 fun CreationExtras.fieldFavoritesApplication(): FieldFavoritesApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as FieldFavoritesApplication)

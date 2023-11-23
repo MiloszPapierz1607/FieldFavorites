@@ -26,11 +26,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
 
+/**
+ * Top level composable that represents screens for the application.
+ * */
 @Composable
 fun FieldFavoritesApp(navController: NavHostController = rememberNavController()) {
     FieldFavoritesNavHost(navController = navController)
 }
 
+/**
+ * App bar to display bottom app bar items.
+ * @param bottomAppBarItems represents the items that will be displayed in the bottom bar
+* */
 @Composable
 fun FieldFavoritesBottomAppBar(
     bottomAppBarItems: List<BottomAppBarItem>
@@ -60,7 +67,10 @@ fun FieldFavoritesBottomAppBar(
 }
 
 
-
+/**
+ * App bar to display title and conditionally display the back navigation.
+ * It also receives a [List] of [ActionMenuItem] that will be displayed in a dropdown menu if [showActionsMenu] is true.
+ * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FieldFavoritesTopAppBar(
@@ -118,6 +128,9 @@ fun FieldFavoritesTopAppBar(
     )
 }
 
+/**
+ * Interface that represents objects that will be displayed in the dropdown menu in the top app bar.
+ * */
 sealed interface ActionMenuItem {
     val title: String
     val onClick: () -> Unit
@@ -128,6 +141,9 @@ sealed interface ActionMenuItem {
     ) : ActionMenuItem
 }
 
+/**
+ * Interface that represents objects that will be displayed in the bottom app bar.
+ * */
 sealed interface BottomAppBarItem {
     val icon: ImageVector
     val onClick: () -> Unit

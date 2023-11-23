@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * A component that uses [Card] composable to define a default styling to keep consistency across the whole app.
+ * */
 @Composable
 fun ReusableCard(
     modifier: Modifier = Modifier,
