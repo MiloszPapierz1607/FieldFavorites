@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>app</title>
+    <link href="images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="scripts/sourceset_dependencies.js" async="async"></script>
+<link href="styles/style.css" rel="Stylesheet">
+<link href="styles/main.css" rel="Stylesheet">
+<link href="styles/prism.css" rel="Stylesheet">
+<link href="styles/logo-styles.css" rel="Stylesheet">
+<link href="styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="index.html">
+                            app
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":app:dokkaHtml/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" id="content" pageIds="app::////PointingToDeclaration//492899073">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>app</span></span></h1>
+  </div>
+  <h2 class="">Packages</h2>
+  <div class="table"><a data-name="155937296%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites" id="155937296%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites/index.html">com.example.fieldfavorites</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="155937296%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1159028916%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.data" id="-1159028916%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.data/index.html">com.example.fieldfavorites.data</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1159028916%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1963139211%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.data.favorites" id="-1963139211%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.data.favorites/index.html">com.example.fieldfavorites.data.favorites</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1963139211%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1565580798%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.data.leagues" id="-1565580798%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.data.leagues/index.html">com.example.fieldfavorites.data.leagues</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1565580798%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="931086021%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.data.standings" id="931086021%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.data.standings/index.html">com.example.fieldfavorites.data.standings</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="931086021%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="234962876%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.data.teamoverview" id="234962876%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.data.teamoverview/index.html">com.example.fieldfavorites.data.teamoverview</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="234962876%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1306995692%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.data.teams" id="-1306995692%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.data.teams/index.html">com.example.fieldfavorites.data.teams</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1306995692%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1139756149%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.model" id="-1139756149%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.model/index.html">com.example.fieldfavorites.model</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1139756149%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="553743952%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.network" id="553743952%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.network/index.html">com.example.fieldfavorites.network</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="553743952%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-615490122%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui" id="-615490122%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui/index.html">com.example.fieldfavorites.ui</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-615490122%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="2008120402%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.components" id="2008120402%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.components/index.html">com.example.fieldfavorites.ui.components</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2008120402%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1554636336%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.navigation" id="-1554636336%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.navigation/index.html">com.example.fieldfavorites.ui.navigation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1554636336%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1818537352%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.screens.favorites" id="-1818537352%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.screens.favorites/index.html">com.example.fieldfavorites.ui.screens.favorites</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1818537352%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="2068085189%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.screens.leagues" id="2068085189%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.screens.leagues/index.html">com.example.fieldfavorites.ui.screens.leagues</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2068085189%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="216746457%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.screens.teamoverview" id="216746457%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.screens.teamoverview/index.html">com.example.fieldfavorites.ui.screens.teamoverview</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="216746457%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1761971688%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.screens.teamoverview.home" id="-1761971688%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.screens.teamoverview.home/index.html">com.example.fieldfavorites.ui.screens.teamoverview.home</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1761971688%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="1921697693%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.screens.teamoverview.players" id="1921697693%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.screens.teamoverview.players/index.html">com.example.fieldfavorites.ui.screens.teamoverview.players</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1921697693%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="815218839%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.screens.teams" id="815218839%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.screens.teams/index.html">com.example.fieldfavorites.ui.screens.teams</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="815218839%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="2128823633%2FPackages%2F492899073" anchor-label="com.example.fieldfavorites.ui.theme" id="2128823633%2FPackages%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+    <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="app/com.example.fieldfavorites.ui.theme/index.html">com.example.fieldfavorites.ui.theme</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2128823633%2FPackages%2F492899073"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
