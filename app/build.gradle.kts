@@ -102,4 +102,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
 }
