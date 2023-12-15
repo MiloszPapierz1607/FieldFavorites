@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -37,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.Team
@@ -50,6 +54,7 @@ object FavoritesDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun FavoritesScreen(
+    deviceType: DeviceType,
     favoriteTeams: List<Team>,
     navigateToOverviewScreen: (Int,String) -> Unit,
     navigateToLeagueScreen: () -> Unit,
@@ -86,25 +91,53 @@ fun FavoritesScreen(
             modifier = modifier
                 .padding(it),
         ) {
-            LazyColumn {
-                itemsIndexed(favoriteTeams) { index,it ->
-                    FavoriteTeamCard(
-                        team = it,
-                        modifier = modifier
-                            .padding(12.dp, 24.dp)
-                            .clickable {
-                                navigateToOverviewScreen(it.id, it.name)
-                            }
-                            .animateEnterExit(
-                                enter = slideInVertically(
-                                    animationSpec = spring(
-                                        stiffness = Spring.StiffnessVeryLow,
-                                        dampingRatio = Spring.DampingRatioLowBouncy
-                                    ),
-                                    initialOffsetY = { it * (index + 1) },
-                                ))
-                            .testTag("favoriteCard")
-                            )
+            if(deviceType == DeviceType.MOBILE) {
+                LazyColumn {
+                    itemsIndexed(favoriteTeams) { index, it ->
+                        FavoriteTeamCard(
+                            team = it,
+                            modifier = modifier
+                                .padding(12.dp, 24.dp)
+                                .testTag("favoriteCard")
+                                .clickable {
+                                    navigateToOverviewScreen(it.id, it.name)
+                                }
+                                .animateEnterExit(
+                                    enter = slideInVertically(
+                                        animationSpec = spring(
+                                            stiffness = Spring.StiffnessVeryLow,
+                                            dampingRatio = Spring.DampingRatioLowBouncy
+                                        ),
+                                        initialOffsetY = { it * (index + 1) },
+                                    )
+                                )
+
+                        )
+                    }
+                }
+            } else {
+                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                    itemsIndexed(favoriteTeams) {index,it ->
+                        FavoriteTeamCard(
+                            team = it,
+                            modifier = modifier
+                                .padding(12.dp, 24.dp)
+                                .testTag("favoriteCard")
+                                .clickable {
+                                    navigateToOverviewScreen(it.id, it.name)
+                                }
+                                .animateEnterExit(
+                                    enter = slideInVertically(
+                                        animationSpec = spring(
+                                            stiffness = Spring.StiffnessVeryLow,
+                                            dampingRatio = Spring.DampingRatioLowBouncy
+                                        ),
+                                        initialOffsetY = { it * (index + 1) },
+                                    )
+                                )
+
+                        )
+                    }
                 }
             }
         }

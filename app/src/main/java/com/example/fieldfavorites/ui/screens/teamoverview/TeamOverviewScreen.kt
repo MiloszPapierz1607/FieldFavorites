@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.fieldfavorites.ActionMenuItem
 import com.example.fieldfavorites.BottomAppBarItem
+import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.FieldFavoritesBottomAppBar
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.ui.AppViewModelProvider
@@ -38,6 +39,7 @@ object TeamOverviewScreenDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamOverviewScreen(
+    deviceType: DeviceType,
     goBack: () -> Unit,
     removeFromFavorite: (id: Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -85,7 +87,7 @@ fun TeamOverviewScreen(
                         nextFixture = teamOverviewUiState.nextFixture!!,
                         standings = teamOverviewUiState.standings
                     )
-                    TeamOverviewScreenContent.TeamOverviewPlayersScreenContent -> TeamOverviewPlayersScreen(teamOverviewUiState.playerStats)
+                    TeamOverviewScreenContent.TeamOverviewPlayersScreenContent -> TeamOverviewPlayersScreen(deviceType,teamOverviewUiState.playerStats)
                 }
             }
         }
