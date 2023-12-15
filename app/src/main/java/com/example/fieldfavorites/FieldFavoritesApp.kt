@@ -36,6 +36,9 @@ fun FieldFavoritesApp(deviceType: DeviceType,navController: NavHostController = 
     FieldFavoritesNavHost(deviceType,navController = navController)
 }
 
+/**
+ * Describes the type of the device user runs the app on.
+ * */
 enum class DeviceType {
     TABLET,MOBILE
 }
