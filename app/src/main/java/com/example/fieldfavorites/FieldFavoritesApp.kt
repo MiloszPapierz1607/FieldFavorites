@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
@@ -55,7 +56,8 @@ fun FieldFavoritesBottomAppBar(
                 IconButton(onClick = it.onClick) {
                     Icon(
                         it.icon,
-                        ""
+                        "",
+                        modifier=Modifier.testTag("bottomAppBarLabel")
                     )
                 }
                 if(it is BottomAppBarItem.BottomAppBarItemWithLabel) {
@@ -86,14 +88,15 @@ fun FieldFavoritesTopAppBar(
     }
 
     CenterAlignedTopAppBar(
-        title = {Text(title)},
+        title = {Text(title,modifier = Modifier.testTag("screenTitle"))},
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = null
+                        contentDescription = null,
+                        modifier = Modifier.testTag("backArrow")
                     )
                 }
             }

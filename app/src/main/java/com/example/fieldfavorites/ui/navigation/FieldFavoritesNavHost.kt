@@ -87,6 +87,9 @@ fun FieldFavoritesNavHost(
                     favoriteTeamsIds = favoriteUiState.favoriteTeams.map { it.id },
                     navigateBack = {
                         navController.popBackStack()
+                    },
+                    navigateToFavorites = {
+                        navController.navigate(FavoritesDestination.route)
                     }
                 )
             }
@@ -95,13 +98,13 @@ fun FieldFavoritesNavHost(
                 route = FavoritesDestination.route
             ) {
                 FavoritesScreen(
+                    favoriteUiState.favoriteTeams,
                     navigateToOverviewScreen = { teamId,teamName ->
                        navController.navigate("${TeamOverviewScreenDestination.route}/$teamId/$teamName")
                     },
                 navigateToLeagueScreen = {
                     navController.navigate(LeaguesDestination.route)
-                },
-                favoriteViewModel = favoriteViewModel
+                }
                 )
             }
 

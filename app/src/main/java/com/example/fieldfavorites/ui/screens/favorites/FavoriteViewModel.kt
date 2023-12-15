@@ -28,6 +28,7 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
 
     init {
         fetchFavoriteTeams()
+
     }
 
     /**
