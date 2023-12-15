@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
@@ -60,7 +61,7 @@ fun FieldFavoritesBottomAppBar(
                 IconButton(onClick = it.onClick) {
                     Icon(
                         it.icon,
-                        "",
+                        stringResource(id = R.string.app_bottom_bar_item_description),
                         modifier=Modifier.testTag("bottomAppBarLabel")
                     )
                 }
@@ -99,7 +100,7 @@ fun FieldFavoritesTopAppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.app_top_bar_back_arrow_description),
                         modifier = Modifier.testTag("backArrow")
                     )
                 }
@@ -110,7 +111,7 @@ fun FieldFavoritesTopAppBar(
                 IconButton(onClick = { menuExpanded = !menuExpanded}) {
                     Icon(
                         imageVector = Icons.Filled.MoreVert,
-                        contentDescription = null
+                        contentDescription = stringResource(R.string.app_top_bar_menu_icon)
                     )
                 }
 

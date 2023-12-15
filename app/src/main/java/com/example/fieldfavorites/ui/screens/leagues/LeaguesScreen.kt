@@ -164,7 +164,7 @@ fun LeagueCard(
                         .data(logoUrl)
                         .crossfade(true)
                         .build(),
-                    contentDescription = "$leagueName logo image",
+                    contentDescription = stringResource(R.string.leagues_league_logo,leagueName),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -188,7 +188,7 @@ fun LeagueCard(
                         .decoderFactory(SvgDecoder.Factory())
                         .crossfade(true)
                         .build(),
-                    contentDescription ="Logo",
+                    contentDescription = stringResource(R.string.leagues_flag_image),
                 )
             }
         }

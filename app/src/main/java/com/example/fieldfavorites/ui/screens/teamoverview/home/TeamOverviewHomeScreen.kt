@@ -14,12 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.FixtureRow
 import com.example.fieldfavorites.model.FixtureTeam
 import com.example.fieldfavorites.model.Standings
@@ -39,7 +41,7 @@ fun TeamOverviewHomeScreen(
 fun OverviewScreen(nextFixture: FixtureRow, standings: List<Standings>, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
-            .padding(8.dp,12.dp)
+            .padding(8.dp, 12.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
@@ -140,7 +142,7 @@ fun NextFixtureCardTeam(team: FixtureTeam,modifier: Modifier = Modifier) {
                 .decoderFactory(SvgDecoder.Factory())
                 .crossfade(true)
                 .build(),
-            contentDescription ="${team.name} logo",
+            contentDescription = stringResource(R.string.favorites_club_image,team.name),
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(team.name)

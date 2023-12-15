@@ -21,12 +21,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.fieldfavorites.DeviceType
+import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.PlayerRow
 import com.example.fieldfavorites.ui.components.ReusableCard
 
@@ -100,7 +102,7 @@ fun PlayerCard(playerData: PlayerRow,modifier: Modifier = Modifier) {
                     .data(playerData.player.photo)
                     .crossfade(true)
                     .build(),
-                contentDescription = "${playerData.player.name} image",
+                contentDescription = stringResource(R.string.teamoverviewplayer_screen_player_image,playerData.player.name),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(50.dp)
