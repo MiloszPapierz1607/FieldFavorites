@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,7 @@ object TeamsDestination : NavigationDestination {
 fun TeamsScreen(
     favoriteTeamsIds: List<Int>,
     navigateBack: () -> Unit,
+    navigateToFavorites: () -> Unit,
     modifier: Modifier = Modifier,
     teamViewModel: TeamViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -87,10 +89,12 @@ fun TeamsScreen(
                             addToFavorite = {
                                 teamViewModel.insertFavoriteTeam(it)
                             },
+                            navigateToFavorites= navigateToFavorites,
                             team = it,
                             isAdded = favoriteTeamsIds.contains(it.id),
                             modifier = modifier
                                 .padding(12.dp, 24.dp)
+                                .testTag("teamCard")
                         )
                     }
                 }
@@ -103,6 +107,7 @@ fun TeamsScreen(
 fun TeamCard(
     isAdded: Boolean = false,
     addToFavorite:() -> Unit,
+    navigateToFavorites: () -> Unit,
     team:Team,
     modifier: Modifier = Modifier
 ) {
@@ -148,8 +153,9 @@ fun TeamCard(
                 IconButton(onClick = {
                     if(!isAdded) {
                         addToFavorite()
+                        navigateToFavorites()
                     }
-                }) {
+                }, modifier = Modifier.testTag("starIcon")) {
                     Icon(
                         imageVector = if(isAdded) Icons.Filled.Star else Icons.TwoTone.Star,
                         contentDescription = null,

@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 /**
  * Ui State for [TeamsScreen]
@@ -43,7 +42,7 @@ class TeamViewModel(
     /**
      * Holds the id of a league the user is currently on.
      * */
-    private val _itemId: Int = checkNotNull(savedStateHandle[TeamsDestination.itemIdArg])
+    private val _itemId: Int = savedStateHandle[TeamsDestination.itemIdArg] ?: 0
     private val _uiState = MutableStateFlow(TeamUiState())
     /**
      * Holds [TeamUiState] for [TeamsScreen]
@@ -79,7 +78,7 @@ class TeamViewModel(
 
                 teamApiState = TeamApiState.Success(teams)
             }
-            catch (e: IOException) {
+            catch (e: Exception) {
                 teamApiState = TeamApiState.Error
             }
         }

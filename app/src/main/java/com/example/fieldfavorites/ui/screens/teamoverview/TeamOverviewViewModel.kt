@@ -46,7 +46,7 @@ class TeamOverviewViewModel(
     private val standingsRepository: StandingsRepository,
     private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
-    private val _teamId: Int = checkNotNull(savedStateHandle[TeamOverviewScreenDestination.itemIdArg])
+    private val _teamId: Int = savedStateHandle[TeamOverviewScreenDestination.itemIdArg] ?: 0
     val teamId: Int get() = _teamId
     private val _teamName: String = savedStateHandle[TeamOverviewScreenDestination.itemNameArg] ?: ""
     val teamName: String get() = _teamName

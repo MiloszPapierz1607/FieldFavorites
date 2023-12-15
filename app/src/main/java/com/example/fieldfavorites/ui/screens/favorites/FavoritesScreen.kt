@@ -26,23 +26,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.Team
-import com.example.fieldfavorites.ui.AppViewModelProvider
 import com.example.fieldfavorites.ui.components.ReusableCard
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
 
@@ -53,13 +50,11 @@ object FavoritesDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun FavoritesScreen(
+    favoriteTeams: List<Team>,
     navigateToOverviewScreen: (Int,String) -> Unit,
     navigateToLeagueScreen: () -> Unit,
-    modifier: Modifier = Modifier,
-    favoriteViewModel: FavoriteViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    modifier: Modifier = Modifier
     ) {
-    val favoriteUiState by favoriteViewModel.uiState.collectAsState()
-
     val visibleState = remember {
         MutableTransitionState(false).apply {
             targetState = true
@@ -74,7 +69,7 @@ fun FavoritesScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navigateToLeagueScreen() }) {
+            FloatingActionButton(onClick = { navigateToLeagueScreen() },modifier = Modifier.testTag("addButton")) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add"
@@ -92,7 +87,7 @@ fun FavoritesScreen(
                 .padding(it),
         ) {
             LazyColumn {
-                itemsIndexed(favoriteUiState.favoriteTeams) { index,it ->
+                itemsIndexed(favoriteTeams) { index,it ->
                     FavoriteTeamCard(
                         team = it,
                         modifier = modifier
@@ -108,6 +103,7 @@ fun FavoritesScreen(
                                     ),
                                     initialOffsetY = { it * (index + 1) },
                                 ))
+                            .testTag("favoriteCard")
                             )
                 }
             }

@@ -14,10 +14,12 @@ interface TeamOverviewRepository {
      * Returns a [List] of [FixtureRow] for a [Team] by given [teamId].
      * [nextGamesCount] specifies the number of [FixtureRow] fetched.
      * */
+    @Throws(Exception::class)
     suspend fun getFixturesByTeamId(teamId: Int,nextGamesCount: Int) : List<FixtureRow>
     /**
      * Returns a [List] of [PlayerRow] from a [Team] by given [teamId]
      * */
+    @Throws(Exception::class)
     suspend fun getPlayersByTeamId(teamId: Int): List<PlayerRow>
 
 }

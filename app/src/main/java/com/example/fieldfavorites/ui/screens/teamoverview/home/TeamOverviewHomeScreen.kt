@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,7 +45,8 @@ fun OverviewScreen(nextFixture: FixtureRow, standings: List<Standings>, modifier
         Text(
             text="Next game",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier= Modifier.testTag("teamOverviewHeader")
         )
         Spacer(modifier = Modifier.height(8.dp))
         NextFixtureCard(nextFixture= nextFixture)
