@@ -12,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.ui.AppViewModelProvider
 import com.example.fieldfavorites.ui.screens.favorites.FavoriteViewModel
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesDestination
@@ -28,6 +29,7 @@ import com.example.fieldfavorites.ui.screens.teams.TeamsScreen
  * */
 @Composable
 fun FieldFavoritesNavHost(
+    deviceType: DeviceType,
     navController: NavHostController,
     modifier: Modifier = Modifier,
     favoriteViewModel: FavoriteViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -43,6 +45,7 @@ fun FieldFavoritesNavHost(
 
             composable(route = LeaguesDestination.route) {
                 LeaguesScreen(
+                    deviceType,
                     canNavigateBack = favoriteUiState.favoriteTeams.isNotEmpty(),
                     navigateToTeams = {
                         navController.navigate("${TeamsDestination.route}/${it}")
@@ -84,6 +87,7 @@ fun FieldFavoritesNavHost(
                 }
             ) {
                 TeamsScreen(
+                    deviceType,
                     favoriteTeamsIds = favoriteUiState.favoriteTeams.map { it.id },
                     navigateBack = {
                         navController.popBackStack()
@@ -98,6 +102,7 @@ fun FieldFavoritesNavHost(
                 route = FavoritesDestination.route
             ) {
                 FavoritesScreen(
+                    deviceType,
                     favoriteUiState.favoriteTeams,
                     navigateToOverviewScreen = { teamId,teamName ->
                        navController.navigate("${TeamOverviewScreenDestination.route}/$teamId/$teamName")
@@ -140,6 +145,7 @@ fun FieldFavoritesNavHost(
                 }
             ) {
                 TeamOverviewScreen(
+                    deviceType,
                     goBack = {
                              navController.navigate(FavoritesDestination.route)
                     },

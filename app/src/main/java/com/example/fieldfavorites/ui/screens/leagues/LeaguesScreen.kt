@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -34,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.ui.AppViewModelProvider
@@ -47,6 +51,7 @@ object LeaguesDestination : NavigationDestination {
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LeaguesScreen(
+    deviceType: DeviceType,
     navigateToFavorites: () -> Unit,
     canNavigateBack: Boolean = false,
     navigateToTeams: (Int) -> Unit,
@@ -80,28 +85,56 @@ fun LeaguesScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
+            if(deviceType == DeviceType.MOBILE) {
             Column {
-                leagueUiState.leagues.forEachIndexed {index,it ->
-                    LeagueCard(
-                        leagueName = it.name,
-                        flagSvgUrl = it.countryFlagSvg,
-                        logoUrl = it.logoImageUrl,
-                        modifier = modifier
-                            .padding(12.dp, 24.dp)
-                            .clickable {
-                                navigateToTeams(it.id)
-                            }
-                            .animateEnterExit(
-                                enter = slideInVertically(
-                                    animationSpec = spring(
-                                        stiffness = Spring.StiffnessVeryLow,
-                                        dampingRatio = Spring.DampingRatioLowBouncy
-                                    ),
-                                    initialOffsetY = { it * (index + 1) }
+                    leagueUiState.leagues.forEachIndexed {index,it ->
+                        LeagueCard(
+                            leagueName = it.name,
+                            flagSvgUrl = it.countryFlagSvg,
+                            logoUrl = it.logoImageUrl,
+                            modifier = modifier
+                                .padding(12.dp, 24.dp)
+                                .testTag("leagueCard")
+                                .clickable {
+                                    navigateToTeams(it.id)
+                                }
+                                .animateEnterExit(
+                                    enter = slideInVertically(
+                                        animationSpec = spring(
+                                            stiffness = Spring.StiffnessVeryLow,
+                                            dampingRatio = Spring.DampingRatioLowBouncy
+                                        ),
+                                        initialOffsetY = { it * (index + 1) }
+                                    )
                                 )
-                            )
-                            .testTag("leagueCard")
-                    )
+
+                        )
+                    }
+                }
+            } else {
+                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                    itemsIndexed(leagueUiState.leagues) {index,it ->
+                        LeagueCard(
+                            leagueName = it.name,
+                            logoUrl = it.logoImageUrl,
+                            flagSvgUrl = it.countryFlagSvg,
+                            modifier = modifier
+                                .padding(12.dp, 24.dp)
+                                .testTag("leagueCard")
+                                .clickable {
+                                    navigateToTeams(it.id)
+                                }
+                                .animateEnterExit(
+                                    enter = slideInVertically(
+                                        animationSpec = spring(
+                                            stiffness = Spring.StiffnessVeryLow,
+                                            dampingRatio = Spring.DampingRatioLowBouncy
+                                        ),
+                                        initialOffsetY = { it * (index + 1) }
+                                    )
+                                )
+                        )
+                    }
                 }
             }
         }
@@ -115,7 +148,6 @@ fun LeagueCard(
     flagSvgUrl: String,
     modifier: Modifier = Modifier
 ) {
-
     ReusableCard(
         modifier = modifier
     ) {

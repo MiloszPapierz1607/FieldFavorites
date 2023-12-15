@@ -31,8 +31,12 @@ import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
  * Top level composable that represents screens for the application.
  * */
 @Composable
-fun FieldFavoritesApp(navController: NavHostController = rememberNavController()) {
-    FieldFavoritesNavHost(navController = navController)
+fun FieldFavoritesApp(deviceType: DeviceType,navController: NavHostController = rememberNavController()) {
+    FieldFavoritesNavHost(deviceType,navController = navController)
+}
+
+enum class DeviceType {
+    TABLET,MOBILE
 }
 
 /**

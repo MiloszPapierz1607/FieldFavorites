@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -21,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.Team
@@ -52,9 +57,10 @@ object TeamsDestination : NavigationDestination {
     val routeWithArgs = "$route/{$itemIdArg}"
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun TeamsScreen(
+    deviceType: DeviceType,
     favoriteTeamsIds: List<Int>,
     navigateBack: () -> Unit,
     navigateToFavorites: () -> Unit,
@@ -83,15 +89,31 @@ fun TeamsScreen(
             when(teamApiState) {
                 is TeamApiState.Loading -> LoadingComponent()
                 is TeamApiState.Error -> Text("Something went wrong. Try again later")
-                is TeamApiState.Success -> LazyColumn {
-                    items(teams) {
-                        TeamCard(
+                is TeamApiState.Success ->
+                    if(deviceType == DeviceType.MOBILE) {
+                        LazyColumn {
+                            items(teams) {
+                            TeamCard(
+                                addToFavorite = {
+                                    teamViewModel.insertFavoriteTeam(it)
+                                },
+                                navigateToFavorites = navigateToFavorites,
+                                team = it,
+                                isAdded = favoriteTeamsIds.contains(it.id),
+                                modifier = modifier
+                                    .padding(12.dp, 24.dp)
+                                    .testTag("teamCard")
+                            )
+                        }
+                    }
+                    } else {
+                        TeamsGrid(
+                            teams = teams,
                             addToFavorite = {
-                                teamViewModel.insertFavoriteTeam(it)
+                                            teamViewModel.insertFavoriteTeam(it)
                             },
-                            navigateToFavorites= navigateToFavorites,
-                            team = it,
-                            isAdded = favoriteTeamsIds.contains(it.id),
+                            navigateToFavorites = navigateToFavorites,
+                            addedTeamsIds = favoriteTeamsIds,
                             modifier = modifier
                                 .padding(12.dp, 24.dp)
                                 .testTag("teamCard")
@@ -100,7 +122,6 @@ fun TeamsScreen(
                 }
             }
         }
-    }
 }
 
 @Composable
@@ -163,6 +184,29 @@ fun TeamCard(
                 }
             }
 
+        }
+    }
+}
+
+@Composable
+fun TeamsGrid(
+    teams: List<Team>,
+    addedTeamsIds: List<Int>,
+    addToFavorite:(team:Team) -> Unit,
+    navigateToFavorites: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        items(teams) {
+            TeamCard(
+                addToFavorite = {
+                                addToFavorite(it)
+                },
+                navigateToFavorites = navigateToFavorites,
+                team = it,
+                isAdded = addedTeamsIds.contains(it.id),
+                modifier = modifier
+            )
         }
     }
 }

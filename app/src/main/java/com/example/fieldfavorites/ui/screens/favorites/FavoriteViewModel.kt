@@ -37,7 +37,7 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
      private fun fetchFavoriteTeams() {
         viewModelScope.launch {
             favoriteRepository.getAllFavoriteTeamsStream().collect {
-                _uiState.value = FavoriteTeamsUiState(favoriteTeams = it,isLoading = false)
+                _uiState.value = FavoriteTeamsUiState(favoriteTeams = it.sortedBy { it.name },isLoading = false)
             }
         }
     }
