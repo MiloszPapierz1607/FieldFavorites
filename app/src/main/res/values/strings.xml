@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">FieldFavorites</string>
+    <string name="app_bottom_bar_item_description">Bottom app bar icon</string>
+    <string name="app_top_bar_back_arrow_description">Back arrow icon</string>
+    <string name="app_top_bar_menu_icon">Menu icon</string>
     <string name="leagues_screen_title">Choose a league</string>
+    <string name="leagues_league_logo">%1$s logo image</string>
+    <string name="leagues_flag_image">League country flag</string>
     <string name="teams_screen_title">Add club to favorite</string>
+    <string name="teams_favorite_icon">Star icon image</string>
     <string name="favorites_screen_title">Your favorite clubs</string>
+    <string name="favorites_add_button_description">Add favorite club icon</string>
+    <string name="favorites_club_image">%1$s logo image</string>
+    <string name="favorites_club_card_arrow_icon">Club card arrow icon</string>
+    <string name="teamoverviewplayer_screen_player_image">%1$s image</string>
 </resources>

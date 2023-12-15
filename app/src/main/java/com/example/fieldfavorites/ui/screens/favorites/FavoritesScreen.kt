@@ -77,7 +77,7 @@ fun FavoritesScreen(
             FloatingActionButton(onClick = { navigateToLeagueScreen() },modifier = Modifier.testTag("addButton")) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add"
+                    contentDescription = stringResource(R.string.favorites_add_button_description)
                 )
             }
         }
@@ -166,7 +166,7 @@ fun FavoriteTeamCard(
                         .data(team.logo)
                         .crossfade(true)
                         .build(),
-                    contentDescription = "${team.name} logo image",
+                    contentDescription = stringResource(R.string.favorites_club_image,team.name),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -181,7 +181,7 @@ fun FavoriteTeamCard(
             IconButton(onClick = {}) {
                 Icon(
                     imageVector = Icons.Filled.ArrowForward,
-                    contentDescription = null
+                    contentDescription = stringResource(R.string.favorites_club_card_arrow_icon)
                 )
             }
         }

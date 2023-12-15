@@ -145,7 +145,7 @@ fun TeamCard(
                         .data(team.logo)
                         .crossfade(true)
                         .build(),
-                    contentDescription = "${team.name} logo image",
+                    contentDescription = stringResource(R.string.favorites_club_image,team.name),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -178,7 +178,7 @@ fun TeamCard(
                 }, modifier = Modifier.testTag("starIcon")) {
                     Icon(
                         imageVector = if(isAdded) Icons.Filled.Star else Icons.TwoTone.Star,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.teams_favorite_icon),
                     )
                 }
             }
