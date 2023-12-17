@@ -44,6 +44,7 @@ import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.FieldFavoritesTopAppBar
 import com.example.fieldfavorites.R
 import com.example.fieldfavorites.model.Team
+import com.example.fieldfavorites.ui.components.LoadingComponent
 import com.example.fieldfavorites.ui.components.ReusableCard
 import com.example.fieldfavorites.ui.navigation.NavigationDestination
 
@@ -54,6 +55,7 @@ object FavoritesDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun FavoritesScreen(
+    favoriteTeamApiState: FavoriteTeamApiState,
     deviceType: DeviceType,
     favoriteTeams: List<Team>,
     navigateToOverviewScreen: (Int,String) -> Unit,
@@ -90,8 +92,10 @@ fun FavoritesScreen(
             exit = fadeOut(),
             modifier = modifier
                 .padding(it),
-        ) {
-            if(deviceType == DeviceType.MOBILE) {
+        ) {when(favoriteTeamApiState) {
+            is FavoriteTeamApiState.Loading -> LoadingComponent()
+            is FavoriteTeamApiState.Error -> Text("Something went wrong. Try again later!")
+            is FavoriteTeamApiState.Success ->  if(deviceType == DeviceType.MOBILE) {
                 LazyColumn {
                     itemsIndexed(favoriteTeams) { index, it ->
                         FavoriteTeamCard(
@@ -142,7 +146,9 @@ fun FavoritesScreen(
             }
         }
 
-    }
+            }
+        }
+
 }
 
 @Composable
