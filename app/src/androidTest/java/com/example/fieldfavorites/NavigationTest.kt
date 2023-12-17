@@ -75,7 +75,7 @@ class NavigationTest {
             .onAllNodesWithTag("favoriteCard")
             .onFirst()
             .performClick()
-        /*
+
         composeTestRule
             .onNodeWithTag("teamOverviewHeader")
             .assertExists()
@@ -86,7 +86,7 @@ class NavigationTest {
             .performClick()
         composeTestRule
             .onAllNodesWithTag("playerCard")
-            .fetchSemanticsNodes(true)*/
+            .fetchSemanticsNodes(true)
     }
 
     @Test

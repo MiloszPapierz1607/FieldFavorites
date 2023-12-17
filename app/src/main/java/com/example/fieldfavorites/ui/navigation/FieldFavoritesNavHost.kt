@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.fieldfavorites.DeviceType
 import com.example.fieldfavorites.ui.AppViewModelProvider
+import com.example.fieldfavorites.ui.screens.favorites.FavoriteTeamApiState
 import com.example.fieldfavorites.ui.screens.favorites.FavoriteViewModel
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesDestination
 import com.example.fieldfavorites.ui.screens.favorites.FavoritesScreen
@@ -36,7 +37,7 @@ fun FieldFavoritesNavHost(
 ) {
     val favoriteUiState by favoriteViewModel.uiState.collectAsState()
 
-    if(!favoriteUiState.isLoading) {
+    if(favoriteViewModel.favoriteTeamApiState != FavoriteTeamApiState.Loading) {
         NavHost(
             navController = navController,
             startDestination = if (favoriteUiState.favoriteTeams.isEmpty()) LeaguesDestination.route else FavoritesDestination.route,
@@ -102,6 +103,7 @@ fun FieldFavoritesNavHost(
                 route = FavoritesDestination.route
             ) {
                 FavoritesScreen(
+                    favoriteViewModel.favoriteTeamApiState,
                     deviceType,
                     favoriteUiState.favoriteTeams,
                     navigateToOverviewScreen = { teamId,teamName ->

@@ -1,5 +1,8 @@
 package com.example.fieldfavorites.ui.screens.favorites
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fieldfavorites.data.favorites.FavoriteRepository
@@ -17,6 +20,15 @@ data class FavoriteTeamsUiState(
 )
 
 /**
+ * Interface that holds the Api state for [FavoritesScreen]
+ * */
+sealed interface FavoriteTeamApiState {
+    object Loading :FavoriteTeamApiState
+    object Success : FavoriteTeamApiState
+    object Error : FavoriteTeamApiState
+}
+
+/**
  * ViewModel to retrieve all favorite teams from the Room database.
  * */
 class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :ViewModel() {
@@ -26,9 +38,14 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
      * */
     val uiState = _uiState.asStateFlow()
 
+    /**
+     * Holds [FavoriteTeamApiState] for [FavoritesScreen]
+     * */
+    var favoriteTeamApiState: FavoriteTeamApiState by mutableStateOf(FavoriteTeamApiState.Loading)
+        private set
+
     init {
         fetchFavoriteTeams()
-
     }
 
     /**
@@ -36,8 +53,13 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
      * */
      private fun fetchFavoriteTeams() {
         viewModelScope.launch {
-            favoriteRepository.getAllFavoriteTeamsStream().collect {
-                _uiState.value = FavoriteTeamsUiState(favoriteTeams = it,isLoading = false)
+            try {
+                favoriteRepository.getAllFavoriteTeamsStream().collect {
+                    _uiState.value = FavoriteTeamsUiState(favoriteTeams = it,isLoading = false)
+                    favoriteTeamApiState = FavoriteTeamApiState.Success
+                }
+            } catch(err: Exception) {
+                favoriteTeamApiState = FavoriteTeamApiState.Error
             }
         }
     }
