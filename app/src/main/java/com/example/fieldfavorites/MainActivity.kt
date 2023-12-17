@@ -23,9 +23,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var deviceType:DeviceType
+                    var deviceType: DeviceType
                     val windowSize = calculateWindowSizeClass(activity = this)
-                    if(windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
+                    if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
                         deviceType = DeviceType.MOBILE
                     } else {
                         deviceType = DeviceType.TABLET

@@ -26,16 +26,16 @@ class FavoriteViewModelTest {
 
     @Test
     fun initializeWithNoFavorites_returnsEmptyList() = runTest {
-        Assert.assertEquals(emptyList<Team>(),viewModel.uiState.value.favoriteTeams)
+        Assert.assertEquals(emptyList<Team>(), viewModel.uiState.value.favoriteTeams)
     }
 
     @Test
     fun initializeWithFavorites_returnsListWithFavorites() = runTest {
         insertTeams()
 
-        Assert.assertEquals(2,viewModel.uiState.value.favoriteTeams.size)
-        Assert.assertEquals("Team A",viewModel.uiState.value.favoriteTeams[0].name)
-        Assert.assertEquals("Team B",viewModel.uiState.value.favoriteTeams[1].name)
+        Assert.assertEquals(2, viewModel.uiState.value.favoriteTeams.size)
+        Assert.assertEquals("Team A", viewModel.uiState.value.favoriteTeams[0].name)
+        Assert.assertEquals("Team B", viewModel.uiState.value.favoriteTeams[1].name)
     }
 
     @Test
@@ -44,9 +44,9 @@ class FavoriteViewModelTest {
 
         viewModel.removeFavoriteTeam(1)
 
-        Assert.assertEquals(1,viewModel.uiState.value.favoriteTeams.size)
-        Assert.assertEquals(2,viewModel.uiState.value.favoriteTeams.get(0).id)
-        Assert.assertEquals("Team B",viewModel.uiState.value.favoriteTeams.get(0).name)
+        Assert.assertEquals(1, viewModel.uiState.value.favoriteTeams.size)
+        Assert.assertEquals(2, viewModel.uiState.value.favoriteTeams.get(0).id)
+        Assert.assertEquals("Team B", viewModel.uiState.value.favoriteTeams.get(0).name)
     }
 
     @Test
@@ -55,9 +55,9 @@ class FavoriteViewModelTest {
 
         viewModel.removeFavoriteTeam(80)
 
-        Assert.assertEquals(2,viewModel.uiState.value.favoriteTeams.size)
-        Assert.assertEquals("Team A",viewModel.uiState.value.favoriteTeams[0].name)
-        Assert.assertEquals("Team B",viewModel.uiState.value.favoriteTeams[1].name)
+        Assert.assertEquals(2, viewModel.uiState.value.favoriteTeams.size)
+        Assert.assertEquals("Team A", viewModel.uiState.value.favoriteTeams[0].name)
+        Assert.assertEquals("Team B", viewModel.uiState.value.favoriteTeams[1].name)
     }
 
     private suspend fun insertTeams() {

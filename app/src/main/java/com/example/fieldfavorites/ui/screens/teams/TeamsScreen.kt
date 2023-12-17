@@ -85,31 +85,31 @@ fun TeamsScreen(
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            when(teamApiState) {
+            when (teamApiState) {
                 is TeamApiState.Loading -> LoadingComponent()
                 is TeamApiState.Error -> Text("Something went wrong. Try again later")
                 is TeamApiState.Success ->
-                    if(deviceType == DeviceType.MOBILE) {
+                    if (deviceType == DeviceType.MOBILE) {
                         LazyColumn {
                             items(teams) {
-                            TeamCard(
-                                addToFavorite = {
-                                    teamViewModel.insertFavoriteTeam(it)
-                                },
-                                navigateToFavorites = navigateToFavorites,
-                                team = it,
-                                isAdded = favoriteTeamsIds.contains(it.id),
-                                modifier = modifier
-                                    .padding(12.dp, 24.dp)
-                                    .testTag("teamCard")
-                            )
+                                TeamCard(
+                                    addToFavorite = {
+                                        teamViewModel.insertFavoriteTeam(it)
+                                    },
+                                    navigateToFavorites = navigateToFavorites,
+                                    team = it,
+                                    isAdded = favoriteTeamsIds.contains(it.id),
+                                    modifier = modifier
+                                        .padding(12.dp, 24.dp)
+                                        .testTag("teamCard")
+                                )
+                            }
                         }
-                    }
                     } else {
                         TeamsGrid(
                             teams = teams,
                             addToFavorite = {
-                                            teamViewModel.insertFavoriteTeam(it)
+                                teamViewModel.insertFavoriteTeam(it)
                             },
                             navigateToFavorites = navigateToFavorites,
                             addedTeamsIds = favoriteTeamsIds,
@@ -118,17 +118,17 @@ fun TeamsScreen(
                                 .testTag("teamCard")
                         )
                     }
-                }
             }
         }
+    }
 }
 
 @Composable
 fun TeamCard(
     isAdded: Boolean = false,
-    addToFavorite:() -> Unit,
+    addToFavorite: () -> Unit,
     navigateToFavorites: () -> Unit,
-    team:Team,
+    team: Team,
     modifier: Modifier = Modifier
 ) {
     ReusableCard(modifier = modifier) {
@@ -145,7 +145,7 @@ fun TeamCard(
                         .data(team.logo)
                         .crossfade(true)
                         .build(),
-                    contentDescription = stringResource(R.string.favorites_club_image,team.name),
+                    contentDescription = stringResource(R.string.favorites_club_image, team.name),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -165,19 +165,18 @@ fun TeamCard(
                     .border(
                         border = BorderStroke(1.dp, SolidColor(MaterialTheme.colorScheme.outline)),
                         shape = CircleShape
-                    )
-                   ,
+                    ),
                 contentAlignment = Alignment.Center,
 
-            ) {
+                ) {
                 IconButton(onClick = {
-                    if(!isAdded) {
+                    if (!isAdded) {
                         addToFavorite()
                         navigateToFavorites()
                     }
                 }, modifier = Modifier.testTag("starIcon")) {
                     Icon(
-                        imageVector = if(isAdded) Icons.Filled.Star else Icons.TwoTone.Star,
+                        imageVector = if (isAdded) Icons.Filled.Star else Icons.TwoTone.Star,
                         contentDescription = stringResource(R.string.teams_favorite_icon),
                     )
                 }
@@ -191,7 +190,7 @@ fun TeamCard(
 fun TeamsGrid(
     teams: List<Team>,
     addedTeamsIds: List<Int>,
-    addToFavorite:(team:Team) -> Unit,
+    addToFavorite: (team: Team) -> Unit,
     navigateToFavorites: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -199,7 +198,7 @@ fun TeamsGrid(
         items(teams) {
             TeamCard(
                 addToFavorite = {
-                                addToFavorite(it)
+                    addToFavorite(it)
                 },
                 navigateToFavorites = navigateToFavorites,
                 team = it,

@@ -58,10 +58,10 @@ fun FavoritesScreen(
     favoriteTeamApiState: FavoriteTeamApiState,
     deviceType: DeviceType,
     favoriteTeams: List<Team>,
-    navigateToOverviewScreen: (Int,String) -> Unit,
+    navigateToOverviewScreen: (Int, String) -> Unit,
     navigateToLeagueScreen: () -> Unit,
     modifier: Modifier = Modifier
-    ) {
+) {
     val visibleState = remember {
         MutableTransitionState(false).apply {
             targetState = true
@@ -76,7 +76,10 @@ fun FavoritesScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navigateToLeagueScreen() },modifier = Modifier.testTag("addButton")) {
+            FloatingActionButton(
+                onClick = { navigateToLeagueScreen() },
+                modifier = Modifier.testTag("addButton")
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.favorites_add_button_description)
@@ -92,68 +95,69 @@ fun FavoritesScreen(
             exit = fadeOut(),
             modifier = modifier
                 .padding(it),
-        ) {when(favoriteTeamApiState) {
-            is FavoriteTeamApiState.Loading -> LoadingComponent()
-            is FavoriteTeamApiState.Error -> Text("Something went wrong. Try again later!")
-            is FavoriteTeamApiState.Success ->  if(deviceType == DeviceType.MOBILE) {
-                LazyColumn {
-                    itemsIndexed(favoriteTeams) { index, it ->
-                        FavoriteTeamCard(
-                            team = it,
-                            modifier = modifier
-                                .padding(12.dp, 24.dp)
-                                .testTag("favoriteCard")
-                                .clickable {
-                                    navigateToOverviewScreen(it.id, it.name)
-                                }
-                                .animateEnterExit(
-                                    enter = slideInVertically(
-                                        animationSpec = spring(
-                                            stiffness = Spring.StiffnessVeryLow,
-                                            dampingRatio = Spring.DampingRatioLowBouncy
-                                        ),
-                                        initialOffsetY = { it * (index + 1) },
+        ) {
+            when (favoriteTeamApiState) {
+                is FavoriteTeamApiState.Loading -> LoadingComponent()
+                is FavoriteTeamApiState.Error -> Text("Something went wrong. Try again later!")
+                is FavoriteTeamApiState.Success -> if (deviceType == DeviceType.MOBILE) {
+                    LazyColumn {
+                        itemsIndexed(favoriteTeams) { index, it ->
+                            FavoriteTeamCard(
+                                team = it,
+                                modifier = modifier
+                                    .padding(12.dp, 24.dp)
+                                    .testTag("favoriteCard")
+                                    .clickable {
+                                        navigateToOverviewScreen(it.id, it.name)
+                                    }
+                                    .animateEnterExit(
+                                        enter = slideInVertically(
+                                            animationSpec = spring(
+                                                stiffness = Spring.StiffnessVeryLow,
+                                                dampingRatio = Spring.DampingRatioLowBouncy
+                                            ),
+                                            initialOffsetY = { it * (index + 1) },
+                                        )
                                     )
-                                )
 
-                        )
+                            )
+                        }
                     }
-                }
-            } else {
-                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-                    itemsIndexed(favoriteTeams) {index,it ->
-                        FavoriteTeamCard(
-                            team = it,
-                            modifier = modifier
-                                .padding(12.dp, 24.dp)
-                                .testTag("favoriteCard")
-                                .clickable {
-                                    navigateToOverviewScreen(it.id, it.name)
-                                }
-                                .animateEnterExit(
-                                    enter = slideInVertically(
-                                        animationSpec = spring(
-                                            stiffness = Spring.StiffnessVeryLow,
-                                            dampingRatio = Spring.DampingRatioLowBouncy
-                                        ),
-                                        initialOffsetY = { it * (index + 1) },
+                } else {
+                    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                        itemsIndexed(favoriteTeams) { index, it ->
+                            FavoriteTeamCard(
+                                team = it,
+                                modifier = modifier
+                                    .padding(12.dp, 24.dp)
+                                    .testTag("favoriteCard")
+                                    .clickable {
+                                        navigateToOverviewScreen(it.id, it.name)
+                                    }
+                                    .animateEnterExit(
+                                        enter = slideInVertically(
+                                            animationSpec = spring(
+                                                stiffness = Spring.StiffnessVeryLow,
+                                                dampingRatio = Spring.DampingRatioLowBouncy
+                                            ),
+                                            initialOffsetY = { it * (index + 1) },
+                                        )
                                     )
-                                )
 
-                        )
+                            )
+                        }
                     }
                 }
             }
-        }
 
-            }
         }
+    }
 
 }
 
 @Composable
 fun FavoriteTeamCard(
-    team:Team,
+    team: Team,
     modifier: Modifier = Modifier
 ) {
     ReusableCard(
@@ -172,7 +176,7 @@ fun FavoriteTeamCard(
                         .data(team.logo)
                         .crossfade(true)
                         .build(),
-                    contentDescription = stringResource(R.string.favorites_club_image,team.name),
+                    contentDescription = stringResource(R.string.favorites_club_image, team.name),
                     contentScale = ContentScale.Crop,
                 )
             }

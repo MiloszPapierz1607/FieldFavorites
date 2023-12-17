@@ -18,9 +18,11 @@ sealed interface LeagueUiState {
  * ViewModel to retrieve all [League] from a [LeagueRepository]
  * */
 class LeagueViewModel(
-    leagueRepository : LeagueRepository
+    leagueRepository: LeagueRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(LeagueUiState.Success(leagueRepository.getTop5Leagues()))
+    private val _uiState =
+        MutableStateFlow(LeagueUiState.Success(leagueRepository.getTop5Leagues()))
+
     /**
      * Holds [LeagueUiState] fetched from the [LeagueRepository].
      * */

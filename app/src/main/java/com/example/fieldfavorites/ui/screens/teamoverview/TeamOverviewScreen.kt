@@ -59,7 +59,7 @@ fun TeamOverviewScreen(
                 items = listOf(
                     ActionMenuItem.NeverShown(
                         title = "Remove from favorites",
-                        onClick = {removeFromFavorite(teamOverviewViewModel.teamId)}
+                        onClick = { removeFromFavorite(teamOverviewViewModel.teamId) }
                     )
                 )
             )
@@ -67,8 +67,19 @@ fun TeamOverviewScreen(
         bottomBar = {
             FieldFavoritesBottomAppBar(
                 bottomAppBarItems = listOf(
-                    BottomAppBarItem.BottomAppBarItemWithLabel(Icons.Default.Home,{currentScreen = TeamOverviewScreenContent.TeamOverviewHomeScreenContent },"Home"),
-                    BottomAppBarItem.BottomAppBarItemWithLabel(Icons.Default.Person,{currentScreen = TeamOverviewScreenContent.TeamOverviewPlayersScreenContent},"Players")
+                    BottomAppBarItem.BottomAppBarItemWithLabel(
+                        Icons.Default.Home,
+                        { currentScreen = TeamOverviewScreenContent.TeamOverviewHomeScreenContent },
+                        "Home"
+                    ),
+                    BottomAppBarItem.BottomAppBarItemWithLabel(
+                        Icons.Default.Person,
+                        {
+                            currentScreen =
+                                TeamOverviewScreenContent.TeamOverviewPlayersScreenContent
+                        },
+                        "Players"
+                    )
                 )
             )
         }
@@ -79,15 +90,19 @@ fun TeamOverviewScreen(
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            when(teamOverviewApiState) {
+            when (teamOverviewApiState) {
                 is TeamOverviewApiState.Loading -> LoadingComponent()
                 is TeamOverviewApiState.Error -> Text("Something went wrong. Try again later!")
-                is TeamOverviewApiState.Success -> when(currentScreen) {
+                is TeamOverviewApiState.Success -> when (currentScreen) {
                     TeamOverviewScreenContent.TeamOverviewHomeScreenContent -> TeamOverviewHomeScreen(
                         nextFixture = teamOverviewUiState.nextFixture!!,
                         standings = teamOverviewUiState.standings
                     )
-                    TeamOverviewScreenContent.TeamOverviewPlayersScreenContent -> TeamOverviewPlayersScreen(deviceType,teamOverviewUiState.playerStats)
+
+                    TeamOverviewScreenContent.TeamOverviewPlayersScreenContent -> TeamOverviewPlayersScreen(
+                        deviceType,
+                        teamOverviewUiState.playerStats
+                    )
                 }
             }
         }

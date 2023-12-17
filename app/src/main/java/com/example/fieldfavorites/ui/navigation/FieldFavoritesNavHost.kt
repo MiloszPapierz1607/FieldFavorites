@@ -37,7 +37,7 @@ fun FieldFavoritesNavHost(
 ) {
     val favoriteUiState by favoriteViewModel.uiState.collectAsState()
 
-    if(favoriteViewModel.favoriteTeamApiState != FavoriteTeamApiState.Loading) {
+    if (favoriteViewModel.favoriteTeamApiState != FavoriteTeamApiState.Loading) {
         NavHost(
             navController = navController,
             startDestination = if (favoriteUiState.favoriteTeams.isEmpty()) LeaguesDestination.route else FavoritesDestination.route,
@@ -106,12 +106,12 @@ fun FieldFavoritesNavHost(
                     favoriteViewModel.favoriteTeamApiState,
                     deviceType,
                     favoriteUiState.favoriteTeams,
-                    navigateToOverviewScreen = { teamId,teamName ->
-                       navController.navigate("${TeamOverviewScreenDestination.route}/$teamId/$teamName")
+                    navigateToOverviewScreen = { teamId, teamName ->
+                        navController.navigate("${TeamOverviewScreenDestination.route}/$teamId/$teamName")
                     },
-                navigateToLeagueScreen = {
-                    navController.navigate(LeaguesDestination.route)
-                }
+                    navigateToLeagueScreen = {
+                        navController.navigate(LeaguesDestination.route)
+                    }
                 )
             }
 
@@ -119,7 +119,9 @@ fun FieldFavoritesNavHost(
                 route = TeamOverviewScreenDestination.routeWithArgs,
                 arguments = listOf(
                     navArgument(TeamOverviewScreenDestination.itemIdArg) { type = NavType.IntType },
-                    navArgument(TeamOverviewScreenDestination.itemNameArg) {type = NavType.StringType}
+                    navArgument(TeamOverviewScreenDestination.itemNameArg) {
+                        type = NavType.StringType
+                    }
                 ),
                 enterTransition = {
                     slideIntoContainer(
@@ -149,7 +151,7 @@ fun FieldFavoritesNavHost(
                 TeamOverviewScreen(
                     deviceType,
                     goBack = {
-                             navController.navigate(FavoritesDestination.route)
+                        navController.navigate(FavoritesDestination.route)
                     },
                     removeFromFavorite = {
                         favoriteViewModel.removeFavoriteTeam(it)

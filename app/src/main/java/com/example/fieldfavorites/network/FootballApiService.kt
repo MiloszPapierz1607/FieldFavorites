@@ -27,7 +27,10 @@ interface FootballApiService {
      * @param season Specifies the seasons the data needs to be fetched from. [currentSeasonYear] is used by default.
      * */
     @GET("teams")
-    suspend fun getTeamsByLeagueId(@Query("league") leagueId: Int,@Query("season") season: Int = currentSeasonYear): ApiResponse
+    suspend fun getTeamsByLeagueId(
+        @Query("league") leagueId: Int,
+        @Query("season") season: Int = currentSeasonYear
+    ): ApiResponse
 
     /**
      * Returns a [ApiFixtureResponse] object. This function can be called from a Coroutine.
@@ -37,7 +40,11 @@ interface FootballApiService {
      * @param season Specifies the seasons the data needs to be fetched from. [currentSeasonYear] is used by default.
      * */
     @GET("fixtures")
-    suspend fun getFixturesByTeamId(@Query("team")teamId: Int,@Query("next") nextGamesCount: Int,@Query("season") season: Int = currentSeasonYear) : ApiFixtureResponse
+    suspend fun getFixturesByTeamId(
+        @Query("team") teamId: Int,
+        @Query("next") nextGamesCount: Int,
+        @Query("season") season: Int = currentSeasonYear
+    ): ApiFixtureResponse
 
     /**
      * Returns a [StandingApiResponse] object. This function can be called from a Coroutine.
@@ -46,7 +53,10 @@ interface FootballApiService {
      * @param season Specifies the seasons the data needs to be fetched from. [currentSeasonYear] is used by default.
      * */
     @GET("standings")
-    suspend fun getStandingsForLeague(@Query("league") leagueId:Int,@Query("season") season: Int = currentSeasonYear): StandingApiResponse
+    suspend fun getStandingsForLeague(
+        @Query("league") leagueId: Int,
+        @Query("season") season: Int = currentSeasonYear
+    ): StandingApiResponse
 
     /**
      * Returns a [PlayerApiResponse] object. This function can be called from a Coroutine.
@@ -56,5 +66,9 @@ interface FootballApiService {
      * @param season Specifies the seasons the data needs to be fetched from. [currentSeasonYear] is used by default.
      * */
     @GET("players")
-    suspend fun getPlayersByTeamId(@Query("team") teamId: Int,@Query("page") page: Int =1,@Query("season") season: Int = currentSeasonYear) : PlayerApiResponse
+    suspend fun getPlayersByTeamId(
+        @Query("team") teamId: Int,
+        @Query("page") page: Int = 1,
+        @Query("season") season: Int = currentSeasonYear
+    ): PlayerApiResponse
 }

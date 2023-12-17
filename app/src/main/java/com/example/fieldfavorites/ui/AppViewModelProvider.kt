@@ -22,7 +22,11 @@ object AppViewModelProvider {
         }
 
         initializer {
-            TeamViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamRepository,fieldFavoritesApplication().container.favoriteRepository)
+            TeamViewModel(
+                this.createSavedStateHandle(),
+                fieldFavoritesApplication().container.teamRepository,
+                fieldFavoritesApplication().container.favoriteRepository
+            )
         }
 
         initializer {
@@ -30,7 +34,12 @@ object AppViewModelProvider {
         }
 
         initializer {
-            TeamOverviewViewModel(this.createSavedStateHandle(),fieldFavoritesApplication().container.teamOverviewRepository,fieldFavoritesApplication().container.standingsRepository,fieldFavoritesApplication().container.favoriteRepository)
+            TeamOverviewViewModel(
+                this.createSavedStateHandle(),
+                fieldFavoritesApplication().container.teamOverviewRepository,
+                fieldFavoritesApplication().container.standingsRepository,
+                fieldFavoritesApplication().container.favoriteRepository
+            )
         }
     }
 }

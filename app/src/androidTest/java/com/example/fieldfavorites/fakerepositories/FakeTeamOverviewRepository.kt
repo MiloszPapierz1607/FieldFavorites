@@ -13,7 +13,7 @@ import com.example.fieldfavorites.model.StatisitcGoals
 import com.example.fieldfavorites.model.StatisticGame
 import com.example.fieldfavorites.model.StatisticRow
 
-class FakeTeamOverviewRepository:TeamOverviewRepository {
+class FakeTeamOverviewRepository : TeamOverviewRepository {
     override suspend fun getFixturesByTeamId(teamId: Int, nextGamesCount: Int): List<FixtureRow> {
         val fixtures = listOf(
             FixtureRow(
@@ -48,19 +48,39 @@ class FakeTeamOverviewRepository:TeamOverviewRepository {
     override suspend fun getPlayersByTeamId(teamId: Int): List<PlayerRow> {
         val playerRows = listOf(
             PlayerRow(
-                player = Player(id = 1, name = "Player A", firstname = "First", lastname = "Last", photo = "photo_A"),
+                player = Player(
+                    id = 1,
+                    name = "Player A",
+                    firstname = "First",
+                    lastname = "Last",
+                    photo = "photo_A"
+                ),
                 statistics = arrayOf(
                     StatisticRow(
-                        games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                        games = StatisticGame(
+                            appearences = 10,
+                            minutes = 900,
+                            position = "Forward"
+                        ),
                         goals = StatisitcGoals(total = 5)
                     )
                 )
             ),
             PlayerRow(
-                player = Player(id = 2, name = "Player B", firstname = "First", lastname = "Last", photo = "photo_B"),
+                player = Player(
+                    id = 2,
+                    name = "Player B",
+                    firstname = "First",
+                    lastname = "Last",
+                    photo = "photo_B"
+                ),
                 statistics = arrayOf(
                     StatisticRow(
-                        games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                        games = StatisticGame(
+                            appearences = 8,
+                            minutes = 720,
+                            position = "Midfielder"
+                        ),
                         goals = StatisitcGoals(total = 2)
                     )
                 )

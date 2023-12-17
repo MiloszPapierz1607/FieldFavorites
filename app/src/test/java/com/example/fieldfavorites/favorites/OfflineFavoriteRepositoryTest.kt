@@ -70,7 +70,7 @@ class OfflineFavoriteRepositoryTest {
         repository.insertFavoriteTeam(team1)
         val teamFromRepo = repository.getTeamById(1)
 
-        Assertions.assertEquals(team1,teamFromRepo)
+        Assertions.assertEquals(team1, teamFromRepo)
 
         verify(fakeFavoriteDao).insert(team1)
         verify(fakeFavoriteDao).getTeamById(1)

@@ -64,12 +64,12 @@ class ApiTeamOverviewRepositoryTest {
                 )
             )
 
-            whenever(service.getFixturesByTeamId(1,gameCount)).thenReturn(fakeApiFixtureResponse)
+            whenever(service.getFixturesByTeamId(1, gameCount)).thenReturn(fakeApiFixtureResponse)
 
-            val response = repository.getFixturesByTeamId(1,gameCount)
+            val response = repository.getFixturesByTeamId(1, gameCount)
 
-            Assert.assertEquals(fixtures,response)
-            verify(service).getFixturesByTeamId(1,gameCount)
+            Assert.assertEquals(fixtures, response)
+            verify(service).getFixturesByTeamId(1, gameCount)
         }
 
     @Test
@@ -132,61 +132,101 @@ class ApiTeamOverviewRepositoryTest {
                 )
             )
 
-            whenever(service.getFixturesByTeamId(1,gameCount)).thenReturn(fakeApiFixtureResponse)
+            whenever(service.getFixturesByTeamId(1, gameCount)).thenReturn(fakeApiFixtureResponse)
 
-            val response = repository.getFixturesByTeamId(1,gameCount)
+            val response = repository.getFixturesByTeamId(1, gameCount)
 
-            Assert.assertEquals(fixtures,response)
-            Assert.assertEquals(gameCount,response.size)
-            verify(service).getFixturesByTeamId(1,gameCount)
+            Assert.assertEquals(fixtures, response)
+            Assert.assertEquals(gameCount, response.size)
+            verify(service).getFixturesByTeamId(1, gameCount)
         }
 
     @Test
     fun apiTemOverviewRepository_getPlayersByTeamIdOneRequest_returnsPlayersList() =
         runTest {
             val teamId = 1
-            whenever(service.getPlayersByTeamId(teamId,1)).thenReturn(
+            whenever(service.getPlayersByTeamId(teamId, 1)).thenReturn(
                 PlayerApiResponse(
                     paging = Paging(current = 1, total = 1),
-            response = arrayOf(
-                PlayerRow(
-                    player = Player(id = 1, name = "Player A", firstname = "First", lastname = "Last", photo = "photo_A"),
-                    statistics = arrayOf(
-                        StatisticRow(
-                            games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
-                            goals = StatisitcGoals(total = 5)
-                        )
-                    )
-                ),
-                PlayerRow(
-                    player = Player(id = 2, name = "Player B", firstname = "First", lastname = "Last", photo = "photo_B"),
-                    statistics = arrayOf(
-                        StatisticRow(
-                            games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
-                            goals = StatisitcGoals(total = 2)
-                        )
-                    )
-                ),
+                    response = arrayOf(
+                        PlayerRow(
+                            player = Player(
+                                id = 1,
+                                name = "Player A",
+                                firstname = "First",
+                                lastname = "Last",
+                                photo = "photo_A"
+                            ),
+                            statistics = arrayOf(
+                                StatisticRow(
+                                    games = StatisticGame(
+                                        appearences = 10,
+                                        minutes = 900,
+                                        position = "Forward"
+                                    ),
+                                    goals = StatisitcGoals(total = 5)
+                                )
+                            )
+                        ),
+                        PlayerRow(
+                            player = Player(
+                                id = 2,
+                                name = "Player B",
+                                firstname = "First",
+                                lastname = "Last",
+                                photo = "photo_B"
+                            ),
+                            statistics = arrayOf(
+                                StatisticRow(
+                                    games = StatisticGame(
+                                        appearences = 8,
+                                        minutes = 720,
+                                        position = "Midfielder"
+                                    ),
+                                    goals = StatisitcGoals(total = 2)
+                                )
+                            )
+                        ),
 
-            )
-            )
+                        )
+                )
             )
 
             val playerRows = listOf(
                 PlayerRow(
-                    player = Player(id = 1, name = "Player A", firstname = "First", lastname = "Last", photo = "photo_A"),
+                    player = Player(
+                        id = 1,
+                        name = "Player A",
+                        firstname = "First",
+                        lastname = "Last",
+                        photo = "photo_A"
+                    ),
                     statistics = arrayOf(
                         StatisticRow(
-                            games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                            games = StatisticGame(
+                                appearences = 10,
+                                minutes = 900,
+                                position = "Forward"
+                            ),
                             goals = StatisitcGoals(total = 5)
                         )
                     )
                 ),
                 PlayerRow(
-                    player = Player(id = 2, name = "Player B", firstname = "First", lastname = "Last", photo = "photo_B"),
+                    player = Player(
+                        id = 2,
+                        name = "Player B",
+                        firstname = "First",
+                        lastname = "Last",
+                        photo = "photo_B"
+                    ),
                     statistics = arrayOf(
                         StatisticRow(
-                            games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                            games = StatisticGame(
+                                appearences = 8,
+                                minutes = 720,
+                                position = "Midfielder"
+                            ),
                             goals = StatisitcGoals(total = 2)
                         )
                     )
@@ -195,34 +235,54 @@ class ApiTeamOverviewRepositoryTest {
 
             val response = repository.getPlayersByTeamId(teamId)
 
-            Assert.assertEquals(2,response.size)
-            Assert.assertEquals(playerRows[0].player,response[0].player)
-            Assert.assertArrayEquals(playerRows[0].statistics,response[0].statistics)
-            verify(service).getPlayersByTeamId(teamId,1)
+            Assert.assertEquals(2, response.size)
+            Assert.assertEquals(playerRows[0].player, response[0].player)
+            Assert.assertArrayEquals(playerRows[0].statistics, response[0].statistics)
+            verify(service).getPlayersByTeamId(teamId, 1)
         }
 
     @Test
     fun apiTemOverviewRepository_getPlayersByTeamIdTwoRequest_returnsPlayersList() =
         runTest {
             val teamId = 1
-            whenever(service.getPlayersByTeamId(teamId,1)).thenReturn(
+            whenever(service.getPlayersByTeamId(teamId, 1)).thenReturn(
                 PlayerApiResponse(
                     paging = Paging(current = 1, total = 2),
                     response = arrayOf(
                         PlayerRow(
-                            player = Player(id = 1, name = "Player A", firstname = "First", lastname = "Last", photo = "photo_A"),
+                            player = Player(
+                                id = 1,
+                                name = "Player A",
+                                firstname = "First",
+                                lastname = "Last",
+                                photo = "photo_A"
+                            ),
                             statistics = arrayOf(
                                 StatisticRow(
-                                    games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                                    games = StatisticGame(
+                                        appearences = 10,
+                                        minutes = 900,
+                                        position = "Forward"
+                                    ),
                                     goals = StatisitcGoals(total = 5)
                                 )
                             )
                         ),
                         PlayerRow(
-                            player = Player(id = 2, name = "Player B", firstname = "First", lastname = "Last", photo = "photo_B"),
+                            player = Player(
+                                id = 2,
+                                name = "Player B",
+                                firstname = "First",
+                                lastname = "Last",
+                                photo = "photo_B"
+                            ),
                             statistics = arrayOf(
                                 StatisticRow(
-                                    games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                                    games = StatisticGame(
+                                        appearences = 8,
+                                        minutes = 720,
+                                        position = "Midfielder"
+                                    ),
                                     goals = StatisitcGoals(total = 2)
                                 )
                             )
@@ -232,24 +292,44 @@ class ApiTeamOverviewRepositoryTest {
                 )
             )
 
-            whenever(service.getPlayersByTeamId(teamId,2)).thenReturn(
+            whenever(service.getPlayersByTeamId(teamId, 2)).thenReturn(
                 PlayerApiResponse(
                     paging = Paging(current = 2, total = 1),
                     response = arrayOf(
                         PlayerRow(
-                            player = Player(id = 3, name = "Player C", firstname = "First", lastname = "Last", photo = "photo_C"),
+                            player = Player(
+                                id = 3,
+                                name = "Player C",
+                                firstname = "First",
+                                lastname = "Last",
+                                photo = "photo_C"
+                            ),
                             statistics = arrayOf(
                                 StatisticRow(
-                                    games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                                    games = StatisticGame(
+                                        appearences = 10,
+                                        minutes = 900,
+                                        position = "Forward"
+                                    ),
                                     goals = StatisitcGoals(total = 5)
                                 )
                             )
                         ),
                         PlayerRow(
-                            player = Player(id = 4, name = "Player D", firstname = "First", lastname = "Last", photo = "photo_D"),
+                            player = Player(
+                                id = 4,
+                                name = "Player D",
+                                firstname = "First",
+                                lastname = "Last",
+                                photo = "photo_D"
+                            ),
                             statistics = arrayOf(
                                 StatisticRow(
-                                    games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                                    games = StatisticGame(
+                                        appearences = 8,
+                                        minutes = 720,
+                                        position = "Midfielder"
+                                    ),
                                     goals = StatisitcGoals(total = 2)
                                 )
                             )
@@ -261,37 +341,77 @@ class ApiTeamOverviewRepositoryTest {
 
             val playerRows = listOf(
                 PlayerRow(
-                    player = Player(id = 1, name = "Player A", firstname = "First", lastname = "Last", photo = "photo_A"),
+                    player = Player(
+                        id = 1,
+                        name = "Player A",
+                        firstname = "First",
+                        lastname = "Last",
+                        photo = "photo_A"
+                    ),
                     statistics = arrayOf(
                         StatisticRow(
-                            games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                            games = StatisticGame(
+                                appearences = 10,
+                                minutes = 900,
+                                position = "Forward"
+                            ),
                             goals = StatisitcGoals(total = 5)
                         )
                     )
                 ),
                 PlayerRow(
-                    player = Player(id = 2, name = "Player B", firstname = "First", lastname = "Last", photo = "photo_B"),
+                    player = Player(
+                        id = 2,
+                        name = "Player B",
+                        firstname = "First",
+                        lastname = "Last",
+                        photo = "photo_B"
+                    ),
                     statistics = arrayOf(
                         StatisticRow(
-                            games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                            games = StatisticGame(
+                                appearences = 8,
+                                minutes = 720,
+                                position = "Midfielder"
+                            ),
                             goals = StatisitcGoals(total = 2)
                         )
                     )
                 ),
                 PlayerRow(
-                    player = Player(id = 3, name = "Player C", firstname = "First", lastname = "Last", photo = "photo_C"),
+                    player = Player(
+                        id = 3,
+                        name = "Player C",
+                        firstname = "First",
+                        lastname = "Last",
+                        photo = "photo_C"
+                    ),
                     statistics = arrayOf(
                         StatisticRow(
-                            games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                            games = StatisticGame(
+                                appearences = 10,
+                                minutes = 900,
+                                position = "Forward"
+                            ),
                             goals = StatisitcGoals(total = 5)
                         )
                     )
                 ),
                 PlayerRow(
-                    player = Player(id = 4, name = "Player D", firstname = "First", lastname = "Last", photo = "photo_D"),
+                    player = Player(
+                        id = 4,
+                        name = "Player D",
+                        firstname = "First",
+                        lastname = "Last",
+                        photo = "photo_D"
+                    ),
                     statistics = arrayOf(
                         StatisticRow(
-                            games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                            games = StatisticGame(
+                                appearences = 8,
+                                minutes = 720,
+                                position = "Midfielder"
+                            ),
                             goals = StatisitcGoals(total = 2)
                         )
                     )
@@ -300,11 +420,11 @@ class ApiTeamOverviewRepositoryTest {
 
             val response = repository.getPlayersByTeamId(teamId)
 
-            Assert.assertEquals(4,response.size)
-            Assert.assertEquals(playerRows[0].player,response[0].player)
-            Assert.assertArrayEquals(playerRows[0].statistics,response[0].statistics)
-            verify(service).getPlayersByTeamId(teamId,1)
-            verify(service).getPlayersByTeamId(teamId,1)
+            Assert.assertEquals(4, response.size)
+            Assert.assertEquals(playerRows[0].player, response[0].player)
+            Assert.assertArrayEquals(playerRows[0].statistics, response[0].statistics)
+            verify(service).getPlayersByTeamId(teamId, 1)
+            verify(service).getPlayersByTeamId(teamId, 1)
         }
 
 }

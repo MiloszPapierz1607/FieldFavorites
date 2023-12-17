@@ -17,12 +17,16 @@ android {
     compileSdk = 34
 
     buildFeatures {
-        buildConfig= true
+        buildConfig = true
     }
 
 
     defaultConfig {
-        buildConfigField("String","API_FOOTBALL_KEY",apikeyProperties["API_FOOTBALL_KEY"].toString())
+        buildConfigField(
+            "String",
+            "API_FOOTBALL_KEY",
+            apikeyProperties["API_FOOTBALL_KEY"].toString()
+        )
         applicationId = "com.example.fieldfavorites"
         minSdk = 24
         targetSdk = 34

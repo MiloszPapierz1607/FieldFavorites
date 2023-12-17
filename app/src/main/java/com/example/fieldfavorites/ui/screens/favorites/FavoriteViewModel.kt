@@ -23,7 +23,7 @@ data class FavoriteTeamsUiState(
  * Interface that holds the Api state for [FavoritesScreen]
  * */
 sealed interface FavoriteTeamApiState {
-    object Loading :FavoriteTeamApiState
+    object Loading : FavoriteTeamApiState
     object Success : FavoriteTeamApiState
     object Error : FavoriteTeamApiState
 }
@@ -31,8 +31,9 @@ sealed interface FavoriteTeamApiState {
 /**
  * ViewModel to retrieve all favorite teams from the Room database.
  * */
-class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :ViewModel() {
+class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(FavoriteTeamsUiState())
+
     /**
      * Holds favorites ui state. The list of items is retrieved from [FavoriteRepository].
      * */
@@ -51,14 +52,14 @@ class FavoriteViewModel(private val favoriteRepository: FavoriteRepository) :Vie
     /**
      * Fetches all the favorite teams of the user from [FavoriteRepository] data source.
      * */
-     private fun fetchFavoriteTeams() {
+    private fun fetchFavoriteTeams() {
         viewModelScope.launch {
             try {
                 favoriteRepository.getAllFavoriteTeamsStream().collect {
-                    _uiState.value = FavoriteTeamsUiState(favoriteTeams = it,isLoading = false)
+                    _uiState.value = FavoriteTeamsUiState(favoriteTeams = it, isLoading = false)
                     favoriteTeamApiState = FavoriteTeamApiState.Success
                 }
-            } catch(err: Exception) {
+            } catch (err: Exception) {
                 favoriteTeamApiState = FavoriteTeamApiState.Error
             }
         }

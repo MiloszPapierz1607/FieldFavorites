@@ -33,8 +33,12 @@ import com.example.fieldfavorites.model.PlayerRow
 import com.example.fieldfavorites.ui.components.ReusableCard
 
 @Composable
-fun TeamOverviewPlayersScreen(deviceType: DeviceType,playerStats: List<PlayerRow>,modififer: Modifier = Modifier) {
-    if(deviceType == DeviceType.MOBILE) {
+fun TeamOverviewPlayersScreen(
+    deviceType: DeviceType,
+    playerStats: List<PlayerRow>,
+    modififer: Modifier = Modifier
+) {
+    if (deviceType == DeviceType.MOBILE) {
         LazyColumn(
             modifier = Modifier
                 .padding(horizontal = 12.dp)
@@ -59,11 +63,13 @@ fun TeamOverviewPlayersScreen(deviceType: DeviceType,playerStats: List<PlayerRow
             }
         }
     } else {
-        LazyVerticalGrid(columns = GridCells.Fixed(2),modifier = Modifier
-            .padding(horizontal = 12.dp)) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2), modifier = Modifier
+                .padding(horizontal = 12.dp)
+        ) {
             item(span = {
                 GridItemSpan(2)
-            }){
+            }) {
                 Text(
                     text = "Players",
                     modifier = Modifier
@@ -88,8 +94,9 @@ fun TeamOverviewPlayersScreen(deviceType: DeviceType,playerStats: List<PlayerRow
 }
 
 @Composable
-fun PlayerCard(playerData: PlayerRow,modifier: Modifier = Modifier) {
-    val nmbrOfGoals = playerData.statistics.filter { it.goals.total != null}.map { it.goals.total!! }.sum()
+fun PlayerCard(playerData: PlayerRow, modifier: Modifier = Modifier) {
+    val nmbrOfGoals =
+        playerData.statistics.filter { it.goals.total != null }.map { it.goals.total!! }.sum()
 
     ReusableCard(
         modifier = modifier
@@ -102,7 +109,10 @@ fun PlayerCard(playerData: PlayerRow,modifier: Modifier = Modifier) {
                     .data(playerData.player.photo)
                     .crossfade(true)
                     .build(),
-                contentDescription = stringResource(R.string.teamoverviewplayer_screen_player_image,playerData.player.name),
+                contentDescription = stringResource(
+                    R.string.teamoverviewplayer_screen_player_image,
+                    playerData.player.name
+                ),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(50.dp)

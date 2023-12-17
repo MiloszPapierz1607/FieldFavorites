@@ -27,7 +27,7 @@ data class Standings(
     val rank: Int,
     val points: Int,
     val goalsDiff: Int,
-    val team:StandingTeam,
+    val team: StandingTeam,
     val all: StandingAll
 )
 

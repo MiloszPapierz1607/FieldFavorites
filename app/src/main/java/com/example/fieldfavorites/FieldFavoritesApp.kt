@@ -32,21 +32,24 @@ import com.example.fieldfavorites.ui.navigation.FieldFavoritesNavHost
  * Top level composable that represents screens for the application.
  * */
 @Composable
-fun FieldFavoritesApp(deviceType: DeviceType,navController: NavHostController = rememberNavController()) {
-    FieldFavoritesNavHost(deviceType,navController = navController)
+fun FieldFavoritesApp(
+    deviceType: DeviceType,
+    navController: NavHostController = rememberNavController()
+) {
+    FieldFavoritesNavHost(deviceType, navController = navController)
 }
 
 /**
  * Describes the type of the device user runs the app on.
  * */
 enum class DeviceType {
-    TABLET,MOBILE
+    TABLET, MOBILE
 }
 
 /**
  * App bar to display bottom app bar items.
  * @param bottomAppBarItems represents the items that will be displayed in the bottom bar
-* */
+ * */
 @Composable
 fun FieldFavoritesBottomAppBar(
     bottomAppBarItems: List<BottomAppBarItem>
@@ -65,10 +68,10 @@ fun FieldFavoritesBottomAppBar(
                     Icon(
                         it.icon,
                         stringResource(id = R.string.app_bottom_bar_item_description),
-                        modifier=Modifier.testTag("bottomAppBarLabel")
+                        modifier = Modifier.testTag("bottomAppBarLabel")
                     )
                 }
-                if(it is BottomAppBarItem.BottomAppBarItemWithLabel) {
+                if (it is BottomAppBarItem.BottomAppBarItemWithLabel) {
                     Text(it.label)
                 }
             }
@@ -84,7 +87,7 @@ fun FieldFavoritesBottomAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FieldFavoritesTopAppBar(
-    title:String,
+    title: String,
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
@@ -96,7 +99,7 @@ fun FieldFavoritesTopAppBar(
     }
 
     CenterAlignedTopAppBar(
-        title = {Text(title,modifier = Modifier.testTag("screenTitle"))},
+        title = { Text(title, modifier = Modifier.testTag("screenTitle")) },
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
@@ -111,7 +114,7 @@ fun FieldFavoritesTopAppBar(
         },
         actions = {
             if (showActionsMenu) {
-                IconButton(onClick = { menuExpanded = !menuExpanded}) {
+                IconButton(onClick = { menuExpanded = !menuExpanded }) {
                     Icon(
                         imageVector = Icons.Filled.MoreVert,
                         contentDescription = stringResource(R.string.app_top_bar_menu_icon)
@@ -126,7 +129,7 @@ fun FieldFavoritesTopAppBar(
                     items.forEach {
                         DropdownMenuItem(
                             text = {
-                                   Text(it.title)
+                                Text(it.title)
                             },
                             onClick = {
                                 it.onClick()
@@ -147,7 +150,7 @@ sealed interface ActionMenuItem {
     val onClick: () -> Unit
 
     data class NeverShown(
-        override  val title: String,
+        override val title: String,
         override val onClick: () -> Unit
     ) : ActionMenuItem
 }

@@ -31,8 +31,13 @@ data class TeamOverviewUiState(
  * Interface that holds the api state for TeamOverviewScreen
  * */
 sealed interface TeamOverviewApiState {
-    data class Success(val nextFixture: FixtureRow,val standings: List<Standings>,val playerStats: List<PlayerRow>) :
+    data class Success(
+        val nextFixture: FixtureRow,
+        val standings: List<Standings>,
+        val playerStats: List<PlayerRow>
+    ) :
         TeamOverviewApiState
+
     object Loading : TeamOverviewApiState
     object Error : TeamOverviewApiState
 }
@@ -48,10 +53,12 @@ class TeamOverviewViewModel(
 ) : ViewModel() {
     private val _teamId: Int = savedStateHandle[TeamOverviewScreenDestination.itemIdArg] ?: 0
     val teamId: Int get() = _teamId
-    private val _teamName: String = savedStateHandle[TeamOverviewScreenDestination.itemNameArg] ?: ""
+    private val _teamName: String =
+        savedStateHandle[TeamOverviewScreenDestination.itemNameArg] ?: ""
     val teamName: String get() = _teamName
 
     private val _uiState = MutableStateFlow(TeamOverviewUiState())
+
     /**
      * Holds [TeamOverviewUiState] for the [TeamOverviewScreen]
      * */
@@ -75,20 +82,25 @@ class TeamOverviewViewModel(
     private fun getInitialData() {
         viewModelScope.launch {
             try {
-                val firstFixture = teamOverviewRepository.getFixturesByTeamId(_teamId,1)[0]
+                val firstFixture = teamOverviewRepository.getFixturesByTeamId(_teamId, 1)[0]
                 val leagueId = favoriteRepository.getTeamById(_teamId)?.leagueId ?: 0
 
-                if(leagueId == 0) throw Exception("Could not get a team with given id from database")
+                if (leagueId == 0) throw Exception("Could not get a team with given id from database")
 
                 val standings = standingsRepository.getStandingsForLeague(leagueId)
 
                 val playerStats = teamOverviewRepository.getPlayersByTeamId(_teamId)
 
                 _uiState.update {
-                    it.copy(nextFixture = firstFixture,standings = standings,playerStats= playerStats)
+                    it.copy(
+                        nextFixture = firstFixture,
+                        standings = standings,
+                        playerStats = playerStats
+                    )
                 }
 
-                teamOverviewApiState = TeamOverviewApiState.Success(firstFixture, standings,playerStats)
+                teamOverviewApiState =
+                    TeamOverviewApiState.Success(firstFixture, standings, playerStats)
             } catch (e: Exception) {
                 teamOverviewApiState = TeamOverviewApiState.Error
             }

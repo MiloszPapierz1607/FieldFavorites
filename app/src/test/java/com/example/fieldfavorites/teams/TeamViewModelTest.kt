@@ -23,7 +23,7 @@ class TeamViewModelTest {
     @get:Rule
     val testDispatcher = TestDispatcherRule()
 
-    private lateinit var viewModel:TeamViewModel
+    private lateinit var viewModel: TeamViewModel
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var teamsRepository: TeamRepository
     private lateinit var favoriteRepository: FavoriteRepository
@@ -38,63 +38,66 @@ class TeamViewModelTest {
     @Test
     fun initializing_returnsListOfTeams() = runTest {
         val leagueId = 1
-        savedStateHandle.set("itemId",leagueId)
+        savedStateHandle.set("itemId", leagueId)
         val teams = listOf(
-            Team(1,"Team A","logo_A", leagueId ),
-            Team(2,"Team B","logo_B", leagueId ),
-            Team(3,"Team C","logo_C", leagueId )
+            Team(1, "Team A", "logo_A", leagueId),
+            Team(2, "Team B", "logo_B", leagueId),
+            Team(3, "Team C", "logo_C", leagueId)
         )
 
         whenever(teamsRepository.getAllTeamsFromLeague(leagueId)).thenReturn(teams)
         viewModel = TeamViewModel(
             savedStateHandle = savedStateHandle,
             teamsRepository = teamsRepository,
-            favoriteRepository= favoriteRepository
+            favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(teams,viewModel.uiState.value.teams)
-        Assert.assertEquals(TeamApiState.Success(teams),viewModel.teamApiState)
+        Assert.assertEquals(teams, viewModel.uiState.value.teams)
+        Assert.assertEquals(TeamApiState.Success(teams), viewModel.teamApiState)
         verify(teamsRepository).getAllTeamsFromLeague(leagueId)
     }
 
     @Test
     fun initializing_apiThrowsError_apiStateIsSetToError() = runTest {
         val leagueId = 1
-        savedStateHandle.set("itemId",leagueId)
+        savedStateHandle.set("itemId", leagueId)
         val teams = listOf(
-            Team(1,"Team A","logo_A", leagueId ),
-            Team(2,"Team B","logo_B", leagueId ),
-            Team(3,"Team C","logo_C", leagueId )
+            Team(1, "Team A", "logo_A", leagueId),
+            Team(2, "Team B", "logo_B", leagueId),
+            Team(3, "Team C", "logo_C", leagueId)
         )
 
         whenever(teamsRepository.getAllTeamsFromLeague(leagueId)).thenThrow(Exception::class.java)
         viewModel = TeamViewModel(
             savedStateHandle = savedStateHandle,
             teamsRepository = teamsRepository,
-            favoriteRepository= favoriteRepository
+            favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(TeamApiState.Error,viewModel.teamApiState)
+        Assert.assertEquals(TeamApiState.Error, viewModel.teamApiState)
         verify(teamsRepository).getAllTeamsFromLeague(leagueId)
     }
 
     @Test
     fun addingFavoriteTeam_addsNewTeam() = runTest {
         val leagueId = 1
-        savedStateHandle.set("itemId",leagueId)
-        val team = Team(1,"Team A","logo_A", leagueId )
+        savedStateHandle.set("itemId", leagueId)
+        val team = Team(1, "Team A", "logo_A", leagueId)
 
         whenever(teamsRepository.getAllTeamsFromLeague(leagueId)).thenReturn(emptyList<Team>())
 
         viewModel = TeamViewModel(
             savedStateHandle = savedStateHandle,
             teamsRepository = teamsRepository,
-            favoriteRepository= favoriteRepository
+            favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(emptyList<Team>(),favoriteRepository.getAllFavoriteTeamsStream().first())
+        Assert.assertEquals(
+            emptyList<Team>(),
+            favoriteRepository.getAllFavoriteTeamsStream().first()
+        )
         viewModel.insertFavoriteTeam(team)
-        Assert.assertEquals(1,favoriteRepository.getAllFavoriteTeamsStream().first().size)
-        Assert.assertEquals(team,favoriteRepository.getAllFavoriteTeamsStream().first().get(0))
+        Assert.assertEquals(1, favoriteRepository.getAllFavoriteTeamsStream().first().size)
+        Assert.assertEquals(team, favoriteRepository.getAllFavoriteTeamsStream().first().get(0))
     }
 }

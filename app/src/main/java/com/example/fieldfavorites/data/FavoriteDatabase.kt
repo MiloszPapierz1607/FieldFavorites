@@ -21,7 +21,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): FavoriteDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context,FavoriteDatabase::class.java,"favorite_database")
+                Room.databaseBuilder(context, FavoriteDatabase::class.java, "favorite_database")
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }

@@ -11,5 +11,5 @@ interface TeamRepository {
      * Returns a [List] of [Team] objects for a [League] by given [leagueId]
      * */
     @Throws(Exception::class)
-    suspend fun getAllTeamsFromLeague(leagueId: Int) : List<Team>
+    suspend fun getAllTeamsFromLeague(leagueId: Int): List<Team>
 }

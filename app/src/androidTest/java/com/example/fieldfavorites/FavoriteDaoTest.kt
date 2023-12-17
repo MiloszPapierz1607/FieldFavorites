@@ -20,14 +20,14 @@ import java.io.IOException
 class FavoriteDaoTest {
     private lateinit var favoriteDao: FavoriteDao
     private lateinit var favoriteDatabase: FavoriteDatabase
-    private val team1 = Team(1,"Real Madrid","logo.url",4)
-    private val team2 = Team(2,"Fc Barcelona","logo.url",4)
+    private val team1 = Team(1, "Real Madrid", "logo.url", 4)
+    private val team2 = Team(2, "Fc Barcelona", "logo.url", 4)
 
     @Before
     fun createDb() {
         val context: Context = ApplicationProvider.getApplicationContext()
 
-        favoriteDatabase = Room.inMemoryDatabaseBuilder(context,FavoriteDatabase::class.java)
+        favoriteDatabase = Room.inMemoryDatabaseBuilder(context, FavoriteDatabase::class.java)
             .allowMainThreadQueries()
             .build()
         favoriteDao = favoriteDatabase.favoriteDao()
@@ -44,7 +44,7 @@ class FavoriteDaoTest {
     fun daoInsert_insertsTeamIntoDB() = runBlocking {
         addTeamToDb()
         val allItems = favoriteDao.getAllFavorites().first()
-        Assert.assertEquals(allItems[0],team1)
+        Assert.assertEquals(allItems[0], team1)
     }
 
     @Test
@@ -52,8 +52,8 @@ class FavoriteDaoTest {
     fun daoGetAllItems_returnsAllItemsFromDb() = runBlocking {
         addTwoTeamToDb()
         val allItems = favoriteDao.getAllFavorites().first()
-        Assert.assertEquals(allItems[0],team1)
-        Assert.assertEquals(allItems[1],team2)
+        Assert.assertEquals(allItems[0], team1)
+        Assert.assertEquals(allItems[1], team2)
     }
 
     @Test
@@ -61,7 +61,7 @@ class FavoriteDaoTest {
     fun daoGetTeamById_returnsTeamFromDb() = runBlocking {
         addTwoTeamToDb()
         val team = favoriteDao.getTeamById(1)
-        Assert.assertEquals(team,team1)
+        Assert.assertEquals(team, team1)
     }
 
     @Test

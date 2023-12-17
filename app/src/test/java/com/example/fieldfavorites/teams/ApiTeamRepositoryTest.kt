@@ -17,7 +17,7 @@ import org.mockito.kotlin.whenever
 
 class ApiTeamRepositoryTest {
     private lateinit var repository: TeamRepository
-    private lateinit var service:FootballApiService
+    private lateinit var service: FootballApiService
 
     @Before
     fun setup() {
@@ -42,15 +42,15 @@ class ApiTeamRepositoryTest {
             )
         )
         val teams = arrayOf(
-            Team(1,"Team A","logo_A", leagueId ),
-            Team(2,"Team B","logo_B", leagueId ),
-            Team(3,"Team C","logo_C", leagueId )
+            Team(1, "Team A", "logo_A", leagueId),
+            Team(2, "Team B", "logo_B", leagueId),
+            Team(3, "Team C", "logo_C", leagueId)
 
         ).toList()
 
         whenever(service.getTeamsByLeagueId(leagueId)).thenReturn(fakeApiResponse)
 
-        Assert.assertEquals(teams,repository.getAllTeamsFromLeague(leagueId))
+        Assert.assertEquals(teams, repository.getAllTeamsFromLeague(leagueId))
         verify(service).getTeamsByLeagueId(leagueId)
     }
 }

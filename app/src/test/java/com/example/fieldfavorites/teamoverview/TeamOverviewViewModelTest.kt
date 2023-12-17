@@ -60,8 +60,8 @@ class TeamOverviewViewModelTest {
         val leagueId = 1
         val team1 = Team(id = 1, name = teamName, logo = "logo_A", leagueId = leagueId)
 
-        savedStateHandle.set("teamId",teamId)
-        savedStateHandle.set("teamName",teamName)
+        savedStateHandle.set("teamId", teamId)
+        savedStateHandle.set("teamName", teamName)
 
         val standings = listOf(
             Standings(
@@ -81,19 +81,39 @@ class TeamOverviewViewModelTest {
         )
         val playerStats = listOf(
             PlayerRow(
-                player = Player(id = 1, name = "Player A", firstname = "First", lastname = "Last", photo = "photo_A"),
+                player = Player(
+                    id = 1,
+                    name = "Player A",
+                    firstname = "First",
+                    lastname = "Last",
+                    photo = "photo_A"
+                ),
                 statistics = arrayOf(
                     StatisticRow(
-                        games = StatisticGame(appearences = 10, minutes = 900, position = "Forward"),
+                        games = StatisticGame(
+                            appearences = 10,
+                            minutes = 900,
+                            position = "Forward"
+                        ),
                         goals = StatisitcGoals(total = 5)
                     )
                 )
             ),
             PlayerRow(
-                player = Player(id = 2, name = "Player B", firstname = "First", lastname = "Last", photo = "photo_B"),
+                player = Player(
+                    id = 2,
+                    name = "Player B",
+                    firstname = "First",
+                    lastname = "Last",
+                    photo = "photo_B"
+                ),
                 statistics = arrayOf(
                     StatisticRow(
-                        games = StatisticGame(appearences = 8, minutes = 720, position = "Midfielder"),
+                        games = StatisticGame(
+                            appearences = 8,
+                            minutes = 720,
+                            position = "Midfielder"
+                        ),
                         goals = StatisitcGoals(total = 2)
                     )
                 )
@@ -108,7 +128,11 @@ class TeamOverviewViewModelTest {
             )
         )
 
-        whenever(teamOverviewRepository.getFixturesByTeamId(teamId,1)).thenReturn(listOf(nextFixture))
+        whenever(teamOverviewRepository.getFixturesByTeamId(teamId, 1)).thenReturn(
+            listOf(
+                nextFixture
+            )
+        )
 
         favoriteRepository.insertFavoriteTeam(team1)
 
@@ -123,11 +147,14 @@ class TeamOverviewViewModelTest {
             favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(standings,viewModel.uiState.value.standings)
-        Assert.assertEquals(playerStats,viewModel.uiState.value.playerStats)
-        Assert.assertEquals(nextFixture,viewModel.uiState.value.nextFixture)
-        Assert.assertEquals(TeamOverviewApiState.Success(nextFixture,standings,playerStats),viewModel.teamOverviewApiState)
-        verify(teamOverviewRepository).getFixturesByTeamId(teamId,1)
+        Assert.assertEquals(standings, viewModel.uiState.value.standings)
+        Assert.assertEquals(playerStats, viewModel.uiState.value.playerStats)
+        Assert.assertEquals(nextFixture, viewModel.uiState.value.nextFixture)
+        Assert.assertEquals(
+            TeamOverviewApiState.Success(nextFixture, standings, playerStats),
+            viewModel.teamOverviewApiState
+        )
+        verify(teamOverviewRepository).getFixturesByTeamId(teamId, 1)
         verify(teamOverviewRepository).getPlayersByTeamId(teamId)
         verify(standingsRepository).getStandingsForLeague(leagueId)
     }
@@ -135,10 +162,10 @@ class TeamOverviewViewModelTest {
     @Test
     fun initialization_faultyTeamId_errorApiStateIsSet() = runTest {
         val teamId = null
-        savedStateHandle.set("teamId",teamId)
-        savedStateHandle.set("teamName",null)
+        savedStateHandle.set("teamId", teamId)
+        savedStateHandle.set("teamName", null)
 
-        whenever(teamOverviewRepository.getFixturesByTeamId(0,1)).thenThrow(Exception::class.java)
+        whenever(teamOverviewRepository.getFixturesByTeamId(0, 1)).thenThrow(Exception::class.java)
 
         viewModel = TeamOverviewViewModel(
             savedStateHandle = savedStateHandle,
@@ -147,7 +174,7 @@ class TeamOverviewViewModelTest {
             favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(TeamOverviewApiState.Error,viewModel.teamOverviewApiState)
+        Assert.assertEquals(TeamOverviewApiState.Error, viewModel.teamOverviewApiState)
         verify(standingsRepository, never()).getStandingsForLeague(any())
         verify(teamOverviewRepository, never()).getPlayersByTeamId(0)
 
@@ -157,10 +184,10 @@ class TeamOverviewViewModelTest {
     fun initialization_noFavoriteTeamFound_errorIsThrown() = runTest {
         val teamId = 1
         val teamName = "Team A"
-        savedStateHandle.set("teamId",teamId)
-        savedStateHandle.set("teamName",teamName)
+        savedStateHandle.set("teamId", teamId)
+        savedStateHandle.set("teamName", teamName)
 
-        whenever(teamOverviewRepository.getFixturesByTeamId(1,1)).thenReturn(
+        whenever(teamOverviewRepository.getFixturesByTeamId(1, 1)).thenReturn(
             listOf(
                 FixtureRow(
                     fixture = Fixture(venue = FixtureVenue(name = "Stadium A")),
@@ -180,19 +207,19 @@ class TeamOverviewViewModelTest {
             favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(TeamOverviewApiState.Error,viewModel.teamOverviewApiState)
+        Assert.assertEquals(TeamOverviewApiState.Error, viewModel.teamOverviewApiState)
         verify(standingsRepository, never()).getStandingsForLeague(0)
         verify(teamOverviewRepository, never()).getPlayersByTeamId(teamId)
     }
 
     @Test
-    fun initialization_standingsRepositoryThrowsError_ApiStateIsError() = runTest{
+    fun initialization_standingsRepositoryThrowsError_ApiStateIsError() = runTest {
         val teamId = 1
         val teamName = "Team A"
-        savedStateHandle.set("teamId",teamId)
-        savedStateHandle.set("teamName",teamName)
+        savedStateHandle.set("teamId", teamId)
+        savedStateHandle.set("teamName", teamName)
 
-        whenever(teamOverviewRepository.getFixturesByTeamId(1,1)).thenReturn(
+        whenever(teamOverviewRepository.getFixturesByTeamId(1, 1)).thenReturn(
             listOf(
                 FixtureRow(
                     fixture = Fixture(venue = FixtureVenue(name = "Stadium A")),
@@ -214,18 +241,18 @@ class TeamOverviewViewModelTest {
             favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(TeamOverviewApiState.Error,viewModel.teamOverviewApiState)
+        Assert.assertEquals(TeamOverviewApiState.Error, viewModel.teamOverviewApiState)
         verify(teamOverviewRepository, never()).getPlayersByTeamId(teamId)
     }
 
     @Test
-    fun initialization_teamOverViewRepositoryGetPlayersThrowsError_ApiStateIsError() = runTest{
+    fun initialization_teamOverViewRepositoryGetPlayersThrowsError_ApiStateIsError() = runTest {
         val teamId = 1
         val teamName = "Team A"
-        savedStateHandle.set("teamId",teamId)
-        savedStateHandle.set("teamName",teamName)
+        savedStateHandle.set("teamId", teamId)
+        savedStateHandle.set("teamName", teamName)
 
-        whenever(teamOverviewRepository.getFixturesByTeamId(1,1)).thenReturn(
+        whenever(teamOverviewRepository.getFixturesByTeamId(1, 1)).thenReturn(
             listOf(
                 FixtureRow(
                     fixture = Fixture(venue = FixtureVenue(name = "Stadium A")),
@@ -266,7 +293,7 @@ class TeamOverviewViewModelTest {
             favoriteRepository = favoriteRepository
         )
 
-        Assert.assertEquals(TeamOverviewApiState.Error,viewModel.teamOverviewApiState)
+        Assert.assertEquals(TeamOverviewApiState.Error, viewModel.teamOverviewApiState)
     }
 
 }

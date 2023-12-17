@@ -23,21 +23,24 @@ class NavigationTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
-    lateinit var navController:TestNavHostController
+    lateinit var navController: TestNavHostController
 
     @Before
     fun setupAppNavHost() {
         composeTestRule.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            FieldFavoritesApp(deviceType = DeviceType.MOBILE,navController)
+            FieldFavoritesApp(deviceType = DeviceType.MOBILE, navController)
         }
     }
 
 
     @Test
-    fun verifyStartDestination()  {
-        Assert.assertEquals(LeaguesDestination.route, navController.currentBackStackEntry?.destination?.route)
+    fun verifyStartDestination() {
+        Assert.assertEquals(
+            LeaguesDestination.route,
+            navController.currentBackStackEntry?.destination?.route
+        )
     }
 
     @Test
@@ -62,7 +65,7 @@ class NavigationTest {
             .onFirst()
             .performClick()
         composeTestRule
-            .onAllNodesWithTag("starIcon",true)
+            .onAllNodesWithTag("starIcon", true)
             .onFirst()
             .performClick()
 
@@ -81,7 +84,7 @@ class NavigationTest {
             .assertExists()
 
         composeTestRule
-            .onAllNodesWithTag("bottomAppBarLabel",true)
+            .onAllNodesWithTag("bottomAppBarLabel", true)
             .get(1)
             .performClick()
         composeTestRule
@@ -98,7 +101,7 @@ class NavigationTest {
             .onFirst()
             .performClick()
         composeTestRule
-            .onNodeWithTag("backArrow",true)
+            .onNodeWithTag("backArrow", true)
             .performClick()
         composeTestRule
             .onAllNodesWithText("Choose a league")

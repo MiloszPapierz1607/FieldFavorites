@@ -21,6 +21,10 @@ fun ReusableCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = modifier
     ) {
-        content(Modifier.fillMaxWidth().padding(16.dp).sizeIn(minHeight = 52.dp))
+        content(
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .sizeIn(minHeight = 52.dp))
     }
 }

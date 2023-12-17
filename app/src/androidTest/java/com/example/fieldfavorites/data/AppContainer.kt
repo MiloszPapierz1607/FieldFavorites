@@ -13,7 +13,7 @@ import com.example.fieldfavorites.fakerepositories.FakeTeamOverviewRepository
 import com.example.fieldfavorites.fakerepositories.FakeTeamRepository
 
 
-class AppDataContainer(private val context:Context):AppContainer {
+class AppDataContainer(private val context: Context) : AppContainer {
     private val fakeFavoriteRepository = FakeFavoriteRepository()
 
     override val leagueRepository: LeagueRepository by lazy {

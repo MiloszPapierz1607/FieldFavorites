@@ -34,24 +34,28 @@ fun TeamOverviewHomeScreen(
     standings: List<Standings>,
     modifier: Modifier = Modifier,
 ) {
-    OverviewScreen(nextFixture,standings)
+    OverviewScreen(nextFixture, standings)
 }
 
 @Composable
-fun OverviewScreen(nextFixture: FixtureRow, standings: List<Standings>, modifier: Modifier = Modifier) {
+fun OverviewScreen(
+    nextFixture: FixtureRow,
+    standings: List<Standings>,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier
             .padding(8.dp, 12.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text="Next game",
+            text = "Next game",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            modifier= Modifier.testTag("teamOverviewHeader")
+            modifier = Modifier.testTag("teamOverviewHeader")
         )
         Spacer(modifier = Modifier.height(8.dp))
-        NextFixtureCard(nextFixture= nextFixture)
+        NextFixtureCard(nextFixture = nextFixture)
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -66,14 +70,14 @@ fun OverviewScreen(nextFixture: FixtureRow, standings: List<Standings>, modifier
 }
 
 @Composable
-fun Standings(standings: List<Standings>,modifier: Modifier = Modifier) {
+fun Standings(standings: List<Standings>, modifier: Modifier = Modifier) {
     Row {
-        Text("",modifier = Modifier.weight(2f))
-        Text("G",modifier = Modifier.weight(0.5f))
-        Text("W",modifier = Modifier.weight(0.5f))
-        Text("D",modifier = Modifier.weight(0.5f))
-        Text("L",modifier = Modifier.weight(0.5f))
-        Text("P",modifier = Modifier.weight(0.5f))
+        Text("", modifier = Modifier.weight(2f))
+        Text("G", modifier = Modifier.weight(0.5f))
+        Text("W", modifier = Modifier.weight(0.5f))
+        Text("D", modifier = Modifier.weight(0.5f))
+        Text("L", modifier = Modifier.weight(0.5f))
+        Text("P", modifier = Modifier.weight(0.5f))
 
     }
     Column {
@@ -82,24 +86,24 @@ fun Standings(standings: List<Standings>,modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             ) {
-                Text("${it.rank}. ${it.team.name}",modifier = Modifier.weight(2f))
-                Text(it.all.played.toString(),modifier = Modifier.weight(0.5f))
-                Text(it.all.win.toString(),modifier = Modifier.weight(0.5f))
-                Text(it.all.draw.toString(),modifier = Modifier.weight(0.5f))
-                Text(it.all.lose.toString(),modifier = Modifier.weight(0.5f))
-                Text(it.points.toString(),modifier = Modifier.weight(0.5f))
+                Text("${it.rank}. ${it.team.name}", modifier = Modifier.weight(2f))
+                Text(it.all.played.toString(), modifier = Modifier.weight(0.5f))
+                Text(it.all.win.toString(), modifier = Modifier.weight(0.5f))
+                Text(it.all.draw.toString(), modifier = Modifier.weight(0.5f))
+                Text(it.all.lose.toString(), modifier = Modifier.weight(0.5f))
+                Text(it.points.toString(), modifier = Modifier.weight(0.5f))
             }
         }
     }
 }
 
 @Composable
-fun NextFixtureCard(nextFixture: FixtureRow,modifier: Modifier = Modifier) {
+fun NextFixtureCard(nextFixture: FixtureRow, modifier: Modifier = Modifier) {
     ReusableCard(
         modifier = modifier
     ) {
         val indexOfHyphen = nextFixture.league.round.indexOf('-')
-        val matchday = nextFixture.league.round.substring(indexOfHyphen+1)
+        val matchday = nextFixture.league.round.substring(indexOfHyphen + 1)
 
         Column(
             modifier = it,
@@ -131,7 +135,7 @@ fun NextFixtureCard(nextFixture: FixtureRow,modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NextFixtureCardTeam(team: FixtureTeam,modifier: Modifier = Modifier) {
+fun NextFixtureCardTeam(team: FixtureTeam, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -142,7 +146,7 @@ fun NextFixtureCardTeam(team: FixtureTeam,modifier: Modifier = Modifier) {
                 .decoderFactory(SvgDecoder.Factory())
                 .crossfade(true)
                 .build(),
-            contentDescription = stringResource(R.string.favorites_club_image,team.name),
+            contentDescription = stringResource(R.string.favorites_club_image, team.name),
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(team.name)
